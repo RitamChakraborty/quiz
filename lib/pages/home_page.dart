@@ -10,6 +10,7 @@ enum Category {
   THEATRES,
   TELEVISION,
   GAMES,
+  BGAMES,
   SCIENCE,
   COMPUTERS,
   MATHEMATICS,
@@ -30,7 +31,7 @@ enum Category {
 
 enum Difficulty { ANY, EASY, MEDIUM, HARD }
 
-enum Type { ANY, MCQ, TF }
+enum Type { ANY, MULTIPLE, BOOLEAN }
 
 class HomePage extends StatefulWidget {
   @override
@@ -39,9 +40,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int numberOfQuestions = 10;
-  String category = "Any Category";
-  String difficulty = "Any Difficulty";
-  String type = "Any Type";
+  Category category = Category.ANY;
+  Difficulty difficulty = Difficulty.ANY;
+  Type type = Type.ANY;
 
   String getCategory(Category categoryType) {
     switch (categoryType) {
@@ -61,6 +62,8 @@ class _HomePageState extends State<HomePage> {
         return "Television";
       case Category.GAMES:
         return "Video Games";
+      case Category.BGAMES:
+        return "Board Games";
       case Category.SCIENCE:
         return "Science and Nature";
       case Category.COMPUTERS:
@@ -98,6 +101,19 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  int getCategoryId(Category categoryType) {
+    int id = 8;
+    for (Category c in Category.values) {
+      if (c == categoryType) {
+        break;
+      } else {
+        ++id;
+      }
+    }
+
+    return id;
+  }
+
   String getDifficulty(Difficulty difficultyType) {
     switch (difficultyType) {
       case Difficulty.ANY:
@@ -117,9 +133,9 @@ class _HomePageState extends State<HomePage> {
     switch (typeType) {
       case Type.ANY:
         return "Any type";
-      case Type.MCQ:
+      case Type.MULTIPLE:
         return "Multiple Choice";
-      case Type.TF:
+      case Type.BOOLEAN:
         return "True and False";
       default:
         return "Unknown";
@@ -204,6 +220,10 @@ class _HomePageState extends State<HomePage> {
           child: Text("Games"),
         ),
         const PopupMenuItem(
+          value: Category.BGAMES,
+          child: Text("Board Games"),
+        ),
+        const PopupMenuItem(
           value: Category.SCIENCE,
           child: Text("Science"),
         ),
@@ -270,7 +290,7 @@ class _HomePageState extends State<HomePage> {
       ],
       onSelected: (Category categoryType) {
         setState(() {
-          category = getCategory(categoryType);
+          category = categoryType;
         });
       },
     );
@@ -297,7 +317,7 @@ class _HomePageState extends State<HomePage> {
       ],
       onSelected: (difficultyType) {
         setState(() {
-          difficulty = getDifficulty(difficultyType);
+          difficulty = difficultyType;
         });
       },
     );
@@ -310,17 +330,17 @@ class _HomePageState extends State<HomePage> {
           child: Text("Any type"),
         ),
         const PopupMenuItem(
-          value: Type.MCQ,
+          value: Type.MULTIPLE,
           child: Text("Multiple Choice"),
         ),
         const PopupMenuItem(
-          value: Type.TF,
+          value: Type.BOOLEAN,
           child: Text("True and False"),
         ),
       ],
       onSelected: (typeType) {
         setState(() {
-          type = getType(typeType);
+          type = typeType;
         });
       },
     );
@@ -349,20 +369,38 @@ class _HomePageState extends State<HomePage> {
                 ),
                 card(
                     title: "Select Category",
-                    child: selector(title: category, child: categoryMenu)),
+                    child: selector(
+                        title: getCategory(category), child: categoryMenu)),
                 card(
                     title: "Select Difficulty",
-                    child: selector(title: difficulty, child: difficultyMenu)),
+                    child: selector(
+                        title: getDifficulty(difficulty),
+                        child: difficultyMenu)),
                 card(
                     title: "Select Type",
-                    child: selector(title: type, child: typeMenu)),
+                    child: selector(title: getType(type), child: typeMenu)),
                 Container(
                   padding: EdgeInsets.all(16),
                   child: MaterialButton(
                     color: Theme.of(context).buttonColor,
                     child: Text("Start"),
                     onPressed: () {
-                      print("Wala!");
+                      String url = "https://opentdb.com/api.php" +
+                          "?amount=$numberOfQuestions";
+
+                      if (category != Category.ANY) {
+                        url += "&category=${getCategoryId(category)}";
+                      }
+                      if (difficulty != Difficulty.ANY) {
+                        url +=
+                            "&difficulty=${difficulty.toString().split("\.")[1].toLowerCase()}";
+                      }
+                      if (type != Type.ANY) {
+                        url +=
+                            "&type=${type.toString().split("\.")[1].toLowerCase()}";
+                      }
+
+                      print(url);
                     },
                   ),
                 )
