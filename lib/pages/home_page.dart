@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiz/pages/quiz_page.dart';
 
 enum Category {
   ANY,
@@ -156,6 +157,7 @@ class _HomePageState extends State<HomePage> {
 
     final minusButton = Container(
       child: FloatingActionButton(
+        heroTag: "minus_button",
         child: Icon(Icons.remove),
         onPressed: () {
           if (numberOfQuestions > 1) {
@@ -169,6 +171,7 @@ class _HomePageState extends State<HomePage> {
 
     final plusButton = Container(
       child: FloatingActionButton(
+        heroTag: "plus_button",
         child: Icon(Icons.add),
         onPressed: () {
           if (numberOfQuestions < 50) {
@@ -400,7 +403,12 @@ class _HomePageState extends State<HomePage> {
                             "&type=${type.toString().split("\.")[1].toLowerCase()}";
                       }
 
-                      print(url);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => QuizPage(url: url),
+                        ),
+                      );
                     },
                   ),
                 )
