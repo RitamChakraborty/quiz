@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz/model/question.dart';
+import 'package:quiz/pages/result_page.dart';
 
 class QuizPage extends StatefulWidget {
   final String _url;
@@ -25,6 +26,9 @@ class _QuizPageState extends State<QuizPage> {
   Stream<List<Question>> stream;
   PageController controller = PageController();
   var unescape = new HtmlUnescape();
+  int questionIndex = 0;
+  bool overlayVisible = false;
+  bool correct = true;
 
   Future<List<Question>> getQuestions() async {
     var res = await http.get(widget._url);
@@ -65,81 +69,100 @@ class _QuizPageState extends State<QuizPage> {
         body: SafeArea(
           child: StreamBuilder(
             stream: stream,
-            builder: (context, snapshot) => snapshot.hasData
-                ? PageView.builder(
-                    controller: controller,
-                    itemCount: questions.length,
-                    itemBuilder: (context, questionIndex) {
-                      String question = questions[questionIndex].question;
-                      String correctAnswer =
-                          questions[questionIndex].correctAnswer;
-                      List<String> choices = questions[questionIndex].choices;
-                      List<Widget> children = [];
-                      children.add(Flexible(
-                        fit: FlexFit.tight,
-                        flex: 5,
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: Colors.yellow,
-                          child: Text(question),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                String question = questions[questionIndex].question;
+                String correctAnswer = questions[questionIndex].correctAnswer;
+                List<String> choices = questions[questionIndex].choices;
+                List<Widget> children = [];
+                children.add(Flexible(
+                  fit: FlexFit.tight,
+                  flex: 5,
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Card(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            question,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 24),
+                          ),
                         ),
-                      ));
+                      ),
+                      elevation: 5,
+                    ),
+                  ),
+                ));
 
-                      for (String choice in choices) {
-                        children.add(Flexible(
-                          fit: FlexFit.tight,
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                for (String choice in choices) {
+                  children.add(Flexible(
+                    fit: FlexFit.tight,
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Card(
+                        elevation: 5,
+                        child: ListTile(
+                          title: Center(child: Text(choice)),
+                          onTap: () {
+                            setState(() {
+                              if (choice == correctAnswer) {
+                                ++score;
+                                correct = true;
+                              } else {
+                                correct = false;
+                              }
+                              overlayVisible = true;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ));
+                }
+
+                return Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Flex(direction: Axis.vertical, children: children),
+                    overlayVisible
+                        ? InkWell(
+                            onTap: () {
+                              setState(() {
+                                overlayVisible = false;
+                                if (questionIndex + 1 == questions.length) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                            score: score,
+                                            marks: questions.length),
+                                      ));
+                                } else {
+                                  ++questionIndex;
+                                }
+                              });
+                            },
                             child: Container(
-                              color: Colors.red,
-                              child: ListTile(
-                                title: Center(child: Text(choice)),
+                              color: Colors.black87,
+                              alignment: Alignment.center,
+                              child: Icon(
+                                correct
+                                    ? Icons.sentiment_very_satisfied
+                                    : Icons.sentiment_very_dissatisfied,
+                                size: 50,
+                                color: Colors.white,
                               ),
                             ),
-                          ),
-                        ));
-                      }
-
-                      return Flex(direction: Axis.vertical, children: children);
-
-//                      return ListTile(
-//                        enabled: !answered.contains(questionIndex),
-//                        title: Text(),
-//                        subtitle: ListView.builder(
-//                          itemCount: ,
-//                          shrinkWrap: true,
-//                          itemBuilder: (context, index) {
-//                            return ListTile(
-//                              enabled: !answered.contains(questionIndex),
-//                              title:
-//                                  Text(choices[index]),
-//                              onTap: answered.contains(questionIndex)
-//                                  ? null
-//                                  : () {
-//                                      setState(() {
-//                                        answered.add(questionIndex);
-//                                        if (questions[questionIndex]
-//                                                .choices[index] ==
-//                                            ) {
-//                                          ++score;
-//                                        }
-//                                        if (answered.length ==
-//                                            questions.length) {
-//                                          print("All answered, score: $score}");
-//                                        } else {
-//                                          controller
-//                                              .jumpToPage(questionIndex + 1);
-//                                        }
-//                                      });
-//                                    },
-//                            );
-//                          },
-//                        ),
-//                      );
-                    },
-                  )
-                : LinearProgressIndicator(),
+                          )
+                        : Container(),
+                  ],
+                );
+              }
+              return LinearProgressIndicator();
+            },
           ),
         ),
       ),
