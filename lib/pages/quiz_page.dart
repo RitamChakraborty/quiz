@@ -65,44 +65,43 @@ class _QuizPageState extends State<QuizPage> {
         body: SafeArea(
           child: StreamBuilder(
             stream: stream,
-            builder: (context, snapshot) =>
-            snapshot.hasData
+            builder: (context, snapshot) => snapshot.hasData
                 ? PageView.builder(
-              controller: controller,
-              itemCount: questions.length,
-              itemBuilder: (context, questionIndex) {
-                String question = questions[questionIndex].question;
-                String correctAnswer =
-                    questions[questionIndex].correctAnswer;
-                List<String> choices = questions[questionIndex].choices;
-                List<Widget> children = [];
-                children.add(Flexible(
-                  fit: FlexFit.tight,
-                  flex: 5,
-                  child: Container(
-                    alignment: Alignment.center,
-                    color: Colors.yellow,
-                    child: Text(question),
-                  ),
-                ));
-
-                for (String choice in choices) {
-                  children.add(Flexible(
-                    fit: FlexFit.tight,
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        color: Colors.red,
-                        child: ListTile(
-                          title: Center(child: Text(choice)),
+                    controller: controller,
+                    itemCount: questions.length,
+                    itemBuilder: (context, questionIndex) {
+                      String question = questions[questionIndex].question;
+                      String correctAnswer =
+                          questions[questionIndex].correctAnswer;
+                      List<String> choices = questions[questionIndex].choices;
+                      List<Widget> children = [];
+                      children.add(Flexible(
+                        fit: FlexFit.tight,
+                        flex: 5,
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.yellow,
+                          child: Text(question),
                         ),
-                      ),
-                    ),
-                  ));
-                }
+                      ));
 
-                return Flex(direction: Axis.vertical, children: children);
+                      for (String choice in choices) {
+                        children.add(Flexible(
+                          fit: FlexFit.tight,
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              color: Colors.red,
+                              child: ListTile(
+                                title: Center(child: Text(choice)),
+                              ),
+                            ),
+                          ),
+                        ));
+                      }
+
+                      return Flex(direction: Axis.vertical, children: children);
 
 //                      return ListTile(
 //                        enabled: !answered.contains(questionIndex),
@@ -138,8 +137,8 @@ class _QuizPageState extends State<QuizPage> {
 //                          },
 //                        ),
 //                      );
-              },
-            )
+                    },
+                  )
                 : LinearProgressIndicator(),
           ),
         ),
