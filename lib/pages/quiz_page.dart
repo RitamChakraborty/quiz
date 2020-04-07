@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz/model/question.dart';
 
@@ -23,6 +24,7 @@ class _QuizPageState extends State<QuizPage> {
   int score = 0;
   Stream<List<Question>> stream;
   PageController controller = PageController();
+  var unescape = new HtmlUnescape();
 
   Future<List<Question>> getQuestions() async {
     var res = await http.get(widget._url);
@@ -30,13 +32,13 @@ class _QuizPageState extends State<QuizPage> {
 
     if (data['response_code'] == 0) {
       for (var i in data['results']) {
-        String category = i['category'];
-        String question = i['question'];
-        String correctAnswer = i['correct_answer'];
+        String category = unescape.convert(i['category']);
+        String question = unescape.convert(i['question']);
+        String correctAnswer = unescape.convert(i['correct_answer']);
         List<String> choices = [correctAnswer];
 
         for (var j in i['incorrect_answers']) {
-          choices.add(j);
+          choices.add(unescape.convert(j));
         }
 
         questions.add(Question(
