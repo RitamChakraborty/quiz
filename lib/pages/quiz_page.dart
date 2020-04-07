@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz/model/question.dart';
 
@@ -67,41 +69,73 @@ class _QuizPageState extends State<QuizPage> {
               controller: controller,
               itemCount: questions.length,
               itemBuilder: (context, questionIndex) {
-                return ListTile(
-                  enabled: !answered.contains(questionIndex),
-                  title: Text(questions[questionIndex].question),
-                  subtitle: ListView.builder(
-                    itemCount: questions[questionIndex].choices.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        enabled: !answered.contains(questionIndex),
-                        title:
-                        Text(questions[questionIndex].choices[index]),
-                        onTap: answered.contains(questionIndex)
-                            ? null
-                            : () {
-                          setState(() {
-                            answered.add(questionIndex);
-                            if (questions[questionIndex]
-                                .choices[index] ==
-                                questions[questionIndex]
-                                    .correctAnswer) {
-                              ++score;
-                            }
-                            if (answered.length ==
-                                questions.length) {
-                              print("All answered, score: $score}");
-                            } else {
-                              controller
-                                  .jumpToPage(questionIndex + 1);
-                            }
-                          });
-                        },
-                      );
-                    },
+                String question = questions[questionIndex].question;
+                String correctAnswer =
+                    questions[questionIndex].correctAnswer;
+                List<String> choices = questions[questionIndex].choices;
+                List<Widget> children = [];
+                children.add(Flexible(
+                  fit: FlexFit.tight,
+                  flex: 5,
+                  child: Container(
+                    alignment: Alignment.center,
+                    color: Colors.yellow,
+                    child: Text(question),
                   ),
-                );
+                ));
+
+                for (String choice in choices) {
+                  children.add(Flexible(
+                    fit: FlexFit.tight,
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        color: Colors.red,
+                        child: ListTile(
+                          title: Center(child: Text(choice)),
+                        ),
+                      ),
+                    ),
+                  ));
+                }
+
+                return Flex(direction: Axis.vertical, children: children);
+
+//                      return ListTile(
+//                        enabled: !answered.contains(questionIndex),
+//                        title: Text(),
+//                        subtitle: ListView.builder(
+//                          itemCount: ,
+//                          shrinkWrap: true,
+//                          itemBuilder: (context, index) {
+//                            return ListTile(
+//                              enabled: !answered.contains(questionIndex),
+//                              title:
+//                                  Text(choices[index]),
+//                              onTap: answered.contains(questionIndex)
+//                                  ? null
+//                                  : () {
+//                                      setState(() {
+//                                        answered.add(questionIndex);
+//                                        if (questions[questionIndex]
+//                                                .choices[index] ==
+//                                            ) {
+//                                          ++score;
+//                                        }
+//                                        if (answered.length ==
+//                                            questions.length) {
+//                                          print("All answered, score: $score}");
+//                                        } else {
+//                                          controller
+//                                              .jumpToPage(questionIndex + 1);
+//                                        }
+//                                      });
+//                                    },
+//                            );
+//                          },
+//                        ),
+//                      );
               },
             )
                 : LinearProgressIndicator(),
