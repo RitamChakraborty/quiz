@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-class _QuizPageState extends State<QuizPage> {
+class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   List<Question> questions = [];
   Set<int> answered = Set<int>();
   int score = 0;
@@ -45,6 +46,8 @@ class _QuizPageState extends State<QuizPage> {
           choices.add(unescape.convert(j));
         }
 
+        choices.shuffle();
+
         questions.add(Question(
             category: category,
             question: question,
@@ -53,6 +56,7 @@ class _QuizPageState extends State<QuizPage> {
       }
     }
 
+    questions.shuffle();
     return questions;
   }
 
@@ -64,6 +68,111 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    double opacity = 1.0;
+
+    Widget questionWidget({String question}) => Flexible(
+          fit: FlexFit.tight,
+          flex: 5,
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Card(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    question,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              ),
+              elevation: 5,
+            ),
+          ),
+        );
+
+    Widget choiceWidget({String choice, String correctAnswer}) => Flexible(
+          fit: FlexFit.tight,
+          flex: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              elevation: 5,
+              child: InkWell(
+                child: Center(child: Text(choice)),
+                onTap: () {
+                  setState(() {
+                    if (choice == correctAnswer) {
+                      ++score;
+                      correct = true;
+                    } else {
+                      correct = false;
+                    }
+                    overlayVisible = true;
+                  });
+                },
+              ),
+            ),
+          ),
+        );
+
+    Widget overlayWidget({String correctAnswer}) => AnimatedOpacity(
+          duration: Duration(milliseconds: 500),
+          opacity: opacity,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                overlayVisible = false;
+                opacity = 0.0;
+
+                if (questionIndex + 1 == questions.length) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ResultPage(score: score, marks: questions.length),
+                      ));
+                } else {
+                  ++questionIndex;
+                }
+              });
+            },
+            child: Container(
+              color: Colors.black87,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      correct
+                          ? Icons.sentiment_very_satisfied
+                          : Icons.sentiment_very_dissatisfied,
+                      size: 50,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      correct ? "Correct Answer" : "Wrong Answer",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                    !correct
+                        ? Text(
+                            "Right Answer is\n $correctAnswer",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          )
+                        : Container(),
+                  ]),
+            ),
+          ),
+        );
+
     return Material(
       child: Scaffold(
         body: SafeArea(
@@ -74,53 +183,11 @@ class _QuizPageState extends State<QuizPage> {
                 String question = questions[questionIndex].question;
                 String correctAnswer = questions[questionIndex].correctAnswer;
                 List<String> choices = questions[questionIndex].choices;
-                List<Widget> children = [];
-                children.add(Flexible(
-                  fit: FlexFit.tight,
-                  flex: 5,
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Card(
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            question,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 24),
-                          ),
-                        ),
-                      ),
-                      elevation: 5,
-                    ),
-                  ),
-                ));
+                List<Widget> children = [questionWidget(question: question)];
 
                 for (String choice in choices) {
-                  children.add(Flexible(
-                    fit: FlexFit.tight,
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Card(
-                        elevation: 5,
-                        child: ListTile(
-                          title: Center(child: Text(choice)),
-                          onTap: () {
-                            setState(() {
-                              if (choice == correctAnswer) {
-                                ++score;
-                                correct = true;
-                              } else {
-                                correct = false;
-                              }
-                              overlayVisible = true;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ));
+                  children.add(choiceWidget(
+                      choice: choice, correctAnswer: correctAnswer));
                 }
 
                 return Stack(
@@ -128,35 +195,7 @@ class _QuizPageState extends State<QuizPage> {
                   children: <Widget>[
                     Flex(direction: Axis.vertical, children: children),
                     overlayVisible
-                        ? InkWell(
-                            onTap: () {
-                              setState(() {
-                                overlayVisible = false;
-                                if (questionIndex + 1 == questions.length) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ResultPage(
-                                            score: score,
-                                            marks: questions.length),
-                                      ));
-                                } else {
-                                  ++questionIndex;
-                                }
-                              });
-                            },
-                            child: Container(
-                              color: Colors.black87,
-                              alignment: Alignment.center,
-                              child: Icon(
-                                correct
-                                    ? Icons.sentiment_very_satisfied
-                                    : Icons.sentiment_very_dissatisfied,
-                                size: 50,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
+                        ? overlayWidget(correctAnswer: correctAnswer)
                         : Container(),
                   ],
                 );
