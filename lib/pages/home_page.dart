@@ -146,19 +146,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Widget card({@required String title, @required Widget child}) => Container(
-          margin: EdgeInsets.all(8),
+          margin: EdgeInsets.all(16),
           child: Card(
-            child: ListTile(
-              title: Text(title),
-              subtitle: child,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                title: Text(title),
+                subtitle: child,
+              ),
             ),
           ),
         );
 
-    final minusButton = Container(
-      child: FloatingActionButton(
-        heroTag: "minus_button",
-        child: Icon(Icons.remove),
+    Widget buttonContainer({Widget child}) => Container(
+          margin: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle, color: Theme.of(context).buttonColor),
+          child: child,
+        );
+
+    final minusButton = buttonContainer(
+      child: IconButton(
+        icon: Icon(Icons.remove),
         onPressed: () {
           if (numberOfQuestions > 1) {
             setState(() {
@@ -169,10 +178,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    final plusButton = Container(
-      child: FloatingActionButton(
-        heroTag: "plus_button",
-        child: Icon(Icons.add),
+    final plusButton = buttonContainer(
+      child: IconButton(
+        icon: Icon(Icons.add),
         onPressed: () {
           if (numberOfQuestions < 50) {
             setState(() {
@@ -187,8 +195,16 @@ class _HomePageState extends State<HomePage> {
       child: Text("$numberOfQuestions"),
     );
 
+    final icon = Container(
+      padding: EdgeInsets.all(8),
+      child: Icon(
+        Icons.arrow_drop_down,
+        size: 40,
+      ),
+    );
+
     final categoryMenu = PopupMenuButton<Category>(
-      child: Icon(Icons.arrow_drop_down),
+      child: icon,
       itemBuilder: (BuildContext context) => <PopupMenuEntry<Category>>[
         const PopupMenuItem(
           value: Category.ANY,
@@ -299,7 +315,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     final difficultyMenu = PopupMenuButton<Difficulty>(
-      child: Icon(Icons.arrow_drop_down),
+      child: icon,
       itemBuilder: (BuildContext context) => <PopupMenuEntry<Difficulty>>[
         const PopupMenuItem(
           value: Difficulty.ANY,
@@ -326,7 +342,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     final typeMenu = PopupMenuButton<Type>(
-      child: Icon(Icons.arrow_drop_down),
+      child: icon,
       itemBuilder: (BuildContext context) => <PopupMenuEntry<Type>>[
         const PopupMenuItem(
           value: Type.ANY,
@@ -361,7 +377,7 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 card(
                   title: "Number of questions",
