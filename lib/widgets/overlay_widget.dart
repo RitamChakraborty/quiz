@@ -21,7 +21,7 @@ class _OverlayWidgetState extends State<OverlayWidget>
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: widget.correct ? Duration(seconds: 2) : Duration(seconds: 1),
     );
     animation = Tween(begin: 50.0, end: 200.0).animate(CurvedAnimation(
       parent: animationController,
