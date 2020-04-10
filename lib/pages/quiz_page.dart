@@ -121,7 +121,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         );
 
     Widget overlayWidget({String correctAnswer}) => AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
+          duration: Duration(seconds: 100),
           opacity: opacity,
           child: InkWell(
             onTap: () {

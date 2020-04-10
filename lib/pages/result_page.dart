@@ -75,71 +75,80 @@ class _ResultPageState extends State<ResultPage>
       ],
     );
 
-    return Material(
-        child: InkWell(
-      splashColor: Colors.white,
-      onTap: () {
-        showDialog(
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(
             context: context,
             builder: (BuildContext context) {
               return alertDialog;
             });
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: mediaQuery.height * .25 * animation.value,
-            padding: EdgeInsets.all(40),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 20.0, // has the effect of softening the shadow
-                  spreadRadius: 5.0, // has the effect of extending the shadow
-                  offset: Offset(
-                    0.0, // horizontal, move right 10
-                    10.0, // vertical, move down 10
-                  ),
-                )
-              ],
-            ),
-            child: Center(
-              child: Transform.rotate(
-                angle: animation.value * pi * 4,
-                child: Text(
-                  "${widget.score}/${widget.fullMarks}",
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: animation.value * 48,
-                    fontWeight: FontWeight.bold,
+      child: Material(
+          child: InkWell(
+        splashColor: Colors.white,
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alertDialog;
+              });
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: mediaQuery.height * .25 * animation.value,
+              padding: EdgeInsets.all(40),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 20.0, // has the effect of softening the shadow
+                    spreadRadius: 5.0, // has the effect of extending the shadow
+                    offset: Offset(
+                      0.0, // horizontal, move right 10
+                      10.0, // vertical, move down 10
+                    ),
+                  )
+                ],
+              ),
+              child: Center(
+                child: Transform.rotate(
+                  angle: animation.value * pi * 4,
+                  child: Text(
+                    "${widget.score}/${widget.fullMarks}",
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: animation.value * 48,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 24.0,
-          ),
-          Text(
-            "Score",
-            style: TextStyle(
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold,
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(5.0, 5.0),
-                  blurRadius: 5.0,
-                  color: Colors.black12,
-                ),
-              ],
+            SizedBox(
+              height: 24.0,
             ),
-          )
-        ],
-      ),
-    ));
+            Text(
+              "Score",
+              style: TextStyle(
+                fontSize: 40.0,
+                fontWeight: FontWeight.bold,
+                shadows: <Shadow>[
+                  Shadow(
+                    offset: Offset(5.0, 5.0),
+                    blurRadius: 5.0,
+                    color: Colors.black12,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      )),
+    );
   }
 }
