@@ -8,6 +8,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz/model/question.dart';
 import 'package:quiz/pages/result_page.dart';
+import 'package:quiz/widgets/overlay_widget.dart';
 
 class QuizPage extends StatefulWidget {
   final String _url;
@@ -20,7 +21,8 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
+class _QuizPageState extends State<QuizPage>
+    with SingleTickerProviderStateMixin {
   List<Question> questions = [];
   Set<int> answered = Set<int>();
   int score = 0;
@@ -68,8 +70,6 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    double opacity = 1.0;
-
     Widget questionWidget({String question}) => Flexible(
           fit: FlexFit.loose,
           flex: 7,
@@ -120,63 +120,6 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           ),
         );
 
-    Widget overlayWidget({String correctAnswer}) => AnimatedOpacity(
-          duration: Duration(seconds: 100),
-          opacity: opacity,
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                overlayVisible = false;
-                opacity = 0.0;
-
-                if (questionIndex + 1 == questions.length) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ResultPage(
-                            score: score, fullMarks: questions.length),
-                      ));
-                } else {
-                  ++questionIndex;
-                }
-              });
-            },
-            child: Container(
-              color: Colors.black87,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      correct
-                          ? Icons.sentiment_very_satisfied
-                          : Icons.sentiment_very_dissatisfied,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      correct ? "Correct Answer" : "Wrong Answer",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    !correct
-                        ? Text(
-                            "Right Answer is\n $correctAnswer",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          )
-                        : Container(),
-                  ]),
-            ),
-          ),
-        );
-
     return Material(
       child: Scaffold(
         body: SafeArea(
@@ -208,7 +151,27 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   children: <Widget>[
                     Flex(direction: Axis.vertical, children: children),
                     overlayVisible
-                        ? overlayWidget(correctAnswer: correctAnswer)
+                        ? OverlayWidget(
+                            correct: correct,
+                            correctAnswer: correctAnswer,
+                            onTap: () {
+                              setState(() {
+                                overlayVisible = false;
+
+                                if (questionIndex + 1 == questions.length) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ResultPage(
+                                            score: score,
+                                            fullMarks: questions.length),
+                                      ));
+                                } else {
+                                  ++questionIndex;
+                                }
+                              });
+                            },
+                          )
                         : Container(),
                   ],
                 );
