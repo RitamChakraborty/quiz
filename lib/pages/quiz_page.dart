@@ -71,8 +71,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
     double opacity = 1.0;
 
     Widget questionWidget({String question}) => Flexible(
-          fit: FlexFit.tight,
-          flex: 5,
+          fit: FlexFit.loose,
+          flex: 7,
           child: Container(
             padding: EdgeInsets.all(16),
             child: Card(
@@ -86,20 +86,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              elevation: 5,
             ),
           ),
         );
 
     Widget choiceWidget({String choice, String correctAnswer}) => Flexible(
-          fit: FlexFit.tight,
-          flex: 1,
+          fit: FlexFit.loose,
+          flex: 2,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Card(
-              elevation: 5,
               child: InkWell(
-                child: Center(child: Text(choice)),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    choice,
+                  ),
+                ),
                 onTap: () {
                   setState(() {
                     if (choice == correctAnswer) {
@@ -183,7 +187,16 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                 String question = questions[questionIndex].question;
                 String correctAnswer = questions[questionIndex].correctAnswer;
                 List<String> choices = questions[questionIndex].choices;
-                List<Widget> children = [questionWidget(question: question)];
+
+                List<Widget> children = [
+                  Flexible(
+                    flex: 1,
+                    child: LinearProgressIndicator(
+                      value: questionIndex / questions.length,
+                    ),
+                  ),
+                  questionWidget(question: question)
+                ];
 
                 for (String choice in choices) {
                   children.add(choiceWidget(
@@ -200,6 +213,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   ],
                 );
               }
+
               return LinearProgressIndicator();
             },
           ),
