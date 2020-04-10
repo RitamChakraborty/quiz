@@ -133,8 +133,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ResultPage(score: score, marks: questions.length),
+                        builder: (context) => ResultPage(
+                            score: score, fullMarks: questions.length),
                       ));
                 } else {
                   ++questionIndex;
