@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   Category category = Category.ANY;
   Difficulty difficulty = Difficulty.ANY;
   Type type = Type.ANY;
+  bool pointerDown = false;
 
   String getCategory(Category categoryType) {
     switch (categoryType) {
@@ -166,28 +167,61 @@ class _HomePageState extends State<HomePage> {
         );
 
     final minusButton = buttonContainer(
-      child: IconButton(
-        icon: Icon(Icons.remove),
-        onPressed: () {
-          if (numberOfQuestions > 1) {
+      child: Listener(
+        onPointerDown: (PointerDownEvent event) async {
+          pointerDown = true;
+          await Future.delayed(Duration(milliseconds: 500));
+
+          while (pointerDown && numberOfQuestions > 1) {
             setState(() {
               --numberOfQuestions;
             });
+            print(numberOfQuestions.toString());
+            await Future.delayed(Duration(milliseconds: 100));
           }
         },
+        onPointerUp: (PointerUpEvent event) {
+          pointerDown = false;
+        },
+        child: IconButton(
+          icon: Icon(Icons.remove),
+          onPressed: () {
+            if (numberOfQuestions > 1) {
+              setState(() {
+                --numberOfQuestions;
+              });
+            }
+          },
+        ),
       ),
     );
 
     final plusButton = buttonContainer(
-      child: IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () {
-          if (numberOfQuestions < 50) {
+      child: Listener(
+        onPointerDown: (PointerDownEvent event) async {
+          pointerDown = true;
+          await Future.delayed(Duration(milliseconds: 500));
+
+          while (pointerDown && numberOfQuestions < 50) {
             setState(() {
               ++numberOfQuestions;
             });
+            await Future.delayed(Duration(milliseconds: 100));
           }
         },
+        onPointerUp: (PointerUpEvent event) {
+          pointerDown = false;
+        },
+        child: IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            if (numberOfQuestions < 50) {
+              setState(() {
+                ++numberOfQuestions;
+              });
+            }
+          },
+        ),
       ),
     );
 

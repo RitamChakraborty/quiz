@@ -8,12 +8,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: any
   html_unescape: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  http: any
 
 flutter:
   uses-material-design: true
