@@ -72,6 +72,5 @@ class _OverlayWidgetState extends State<OverlayWidget>
             ]),
       ),
     );
-    ;
   }
 }

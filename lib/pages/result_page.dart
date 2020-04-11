@@ -30,7 +30,7 @@ class _ResultPageState extends State<ResultPage>
           milliseconds: 1000,
         ));
     animation =
-        CurvedAnimation(parent: animationController, curve: Curves.bounceInOut);
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animation.addListener(() => setState(() {}));
     animationController.forward();
   }

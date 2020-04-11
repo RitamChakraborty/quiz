@@ -146,18 +146,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget card({@required String title, @required Widget child}) => Container(
+    Widget card(
+            {@required String title,
+            String subtitle,
+            Widget menu,
+            Widget child}) =>
+        Container(
           margin: EdgeInsets.all(16),
           child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                title: Text(title),
-                subtitle: child,
-              ),
+            child: ListTile(
+              title: Text(title),
+              subtitle: child != null ? child : Text(subtitle),
+              trailing: menu,
             ),
           ),
         );
+
+    final icon = Container(
+      padding: EdgeInsets.all(8),
+      child: Icon(
+        Icons.arrow_drop_down,
+        size: 40,
+      ),
+    );
 
     Widget buttonContainer({Widget child}) => Container(
           margin: EdgeInsets.all(16),
@@ -226,14 +237,9 @@ class _HomePageState extends State<HomePage> {
     );
 
     final questionNumber = Container(
-      child: Text("$numberOfQuestions"),
-    );
-
-    final icon = Container(
-      padding: EdgeInsets.all(8),
-      child: Icon(
-        Icons.arrow_drop_down,
-        size: 40,
+      child: Text(
+        "$numberOfQuestions",
+        style: Theme.of(context).textTheme.title,
       ),
     );
 
@@ -398,20 +404,11 @@ class _HomePageState extends State<HomePage> {
       },
     );
 
-    Widget selector({@required String title, @required Widget child}) =>
-        Container(
-          child: ListTile(
-            title: Text(title),
-            trailing: child,
-          ),
-        );
-
     return Material(
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 card(
                   title: "Number of questions",
@@ -422,16 +419,16 @@ class _HomePageState extends State<HomePage> {
                 ),
                 card(
                     title: "Select Category",
-                    child: selector(
-                        title: getCategory(category), child: categoryMenu)),
+                    menu: categoryMenu,
+                    subtitle: getCategory(category)),
                 card(
                     title: "Select Difficulty",
-                    child: selector(
-                        title: getDifficulty(difficulty),
-                        child: difficultyMenu)),
+                    menu: difficultyMenu,
+                    subtitle: getDifficulty(difficulty)),
                 card(
                     title: "Select Type",
-                    child: selector(title: getType(type), child: typeMenu)),
+                    menu: typeMenu,
+                    subtitle: getType(type)),
                 Container(
                   padding: EdgeInsets.all(16),
                   child: MaterialButton(
