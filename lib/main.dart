@@ -9,11 +9,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Quiz",
+
+      /// [ThemeData] for [ThemeData.light]
       theme: ThemeData(
         brightness: Brightness.light,
         accentColor: Colors.grey,
         backgroundColor: Colors.grey[200],
       ),
+
+      /// [ThemeData] for [ThemeData.dark]
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         backgroundColor: Colors.grey[800],

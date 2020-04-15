@@ -1,3 +1,4 @@
+/// All the categories of [Question]
 enum Category {
   ANY,
   KNOWLEDGE,
@@ -26,10 +27,13 @@ enum Category {
   CARTOON
 }
 
+/// All the difficulties of [Question]
 enum Difficulty { ANY, EASY, MEDIUM, HARD }
 
+/// All the types of [Question]
 enum Type { ANY, MULTIPLE, BOOLEAN }
 
+/// Returns the [Category] as [String]
 String getCategory(Category categoryType) {
   switch (categoryType) {
     case Category.ANY:
@@ -87,6 +91,8 @@ String getCategory(Category categoryType) {
   }
 }
 
+/// Returns the id of the [Category]
+/// Where `8` is [Category.ANY]
 int getCategoryId(Category categoryType) {
   int id = 8;
   for (Category c in Category.values) {
@@ -100,6 +106,7 @@ int getCategoryId(Category categoryType) {
   return id;
 }
 
+/// Returns [Difficulty] as [String]
 String getDifficulty(Difficulty difficultyType) {
   switch (difficultyType) {
     case Difficulty.ANY:
@@ -115,6 +122,7 @@ String getDifficulty(Difficulty difficultyType) {
   }
 }
 
+/// Returns [Type] as [String]
 String getType(Type typeType) {
   switch (typeType) {
     case Type.ANY:
