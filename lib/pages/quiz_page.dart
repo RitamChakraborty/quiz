@@ -24,7 +24,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage>
     with SingleTickerProviderStateMixin {
   List<Question> questions = [];
-  Set<int> answered = Set<int>();
   int score = 0;
   Stream<List<Question>> stream;
   PageController controller = PageController();
@@ -120,6 +119,23 @@ class _QuizPageState extends State<QuizPage>
           ),
         );
 
+    overlayWidgetOnTap() {
+      setState(() {
+        overlayVisible = false;
+
+        if (questionIndex + 1 == questions.length) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ResultPage(score: score, fullMarks: questions.length),
+              ));
+        } else {
+          ++questionIndex;
+        }
+      });
+    }
+
     return Material(
       child: Scaffold(
         body: SafeArea(
@@ -143,7 +159,9 @@ class _QuizPageState extends State<QuizPage>
 
                 for (String choice in choices) {
                   children.add(choiceWidget(
-                      choice: choice, correctAnswer: correctAnswer));
+                    choice: choice,
+                    correctAnswer: correctAnswer,
+                  ));
                 }
 
                 return Stack(
@@ -154,24 +172,7 @@ class _QuizPageState extends State<QuizPage>
                         ? OverlayWidget(
                             correct: correct,
                             correctAnswer: correctAnswer,
-                            onTap: () {
-                              setState(() {
-                                overlayVisible = false;
-
-                                if (questionIndex + 1 == questions.length) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ResultPage(
-                                            score: score,
-                                            fullMarks: questions.length),
-                                      ));
-                                } else {
-                                  ++questionIndex;
-                                }
-                              });
-                            },
-                          )
+                            onTap: overlayWidgetOnTap)
                         : Container(),
                   ],
                 );

@@ -40,20 +40,21 @@ class _ResultPageState extends State<ResultPage>
     animationController.dispose();
   }
 
-  Widget flatButton(String text, VoidCallback onTap) => FlatButton(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 16.0,
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-        onPressed: onTap,
-      );
-
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
+
+    Widget flatButton(String text, VoidCallback onTap) => FlatButton(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontSize: 16.0,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          onPressed: onTap,
+        );
 
     AlertDialog alertDialog = AlertDialog(
       content: Text(
