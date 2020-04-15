@@ -2,8 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import 'home_page.dart';
+import 'package:quiz/pages/home_page.dart';
 
 class ResultPage extends StatefulWidget {
   final int score;
@@ -106,8 +105,10 @@ class _ResultPageState extends State<ResultPage>
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
-                    blurRadius: 20.0, // has the effect of softening the shadow
-                    spreadRadius: 5.0, // has the effect of extending the shadow
+                    blurRadius: 20.0,
+                    // has the effect of softening the shadow
+                    spreadRadius: 5.0,
+                    // has the effect of extending the shadow
                     offset: Offset(
                       0.0, // horizontal, move right 10
                       10.0, // vertical, move down 10
@@ -141,7 +142,7 @@ class _ResultPageState extends State<ResultPage>
                   Shadow(
                     offset: Offset(5.0, 5.0),
                     blurRadius: 5.0,
-                    color: Colors.black12,
+                    color: Theme.of(context).backgroundColor,
                   ),
                 ],
               ),
