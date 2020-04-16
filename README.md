@@ -32,3 +32,6 @@ A quiz app in flutter.
 [video](https://www.youtube.com/watch?v=jBBl1tYkUnE)
 by [**Bram Vanbilsen**](https://www.youtube.com/user/BramVanbilsen)
 
+### Install
+Download the *.apk* file from [here](https://github.com/RitamChakraborty/quiz/releases/download/v1.0/app-release.apk)
+
