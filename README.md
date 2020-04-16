@@ -1,5 +1,4 @@
 # Quiz
-
 A quiz app in flutter.
 
 ### Features
