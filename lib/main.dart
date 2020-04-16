@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Quiz",
+      debugShowCheckedModeBanner: false,
 
       /// [ThemeData] for [ThemeData.light]
       theme: ThemeData(
