@@ -60,6 +60,12 @@ class _OverlayWidgetState extends State<OverlayWidget>
   }
 
   @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     /// Shows the animatedIcon
     final Widget animatedIcon = Container(

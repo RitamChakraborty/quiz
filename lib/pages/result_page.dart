@@ -56,8 +56,8 @@ class _ResultPageState extends State<ResultPage>
 
   @override
   dispose() {
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override
