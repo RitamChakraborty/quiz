@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiz/helper/constants.dart';
 import 'package:quiz/helper/helper.dart';
 import 'package:quiz/pages/quiz_page.dart';
 
@@ -314,7 +315,8 @@ class _HomePageState extends State<HomePage> {
     /// Handle [startButton] onPressed event
     startButtonOnPressed() {
       /// Initial url get to get [numberOfQuestions] amount questions
-      String url = "https://opentdb.com/api.php" + "?amount=$numberOfQuestions";
+      /// [URL] is defied as a constant in `constants.dart`
+      String url = URL + "?amount=$numberOfQuestions";
 
       /// Add [Category] to the [url] if provided
       if (category != Category.ANY) {
