@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/pages/home_page.dart';
 
@@ -67,10 +68,21 @@ class _ResultPageState extends State<ResultPage>
           "Yes",
           () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
           },
         ),
-        flatButton("No", () => exit(0)),
+        flatButton("No", () {
+          if (!kIsWeb) {
+            exit(0);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          }
+        }),
       ],
     );
 
