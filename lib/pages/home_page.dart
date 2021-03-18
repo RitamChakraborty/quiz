@@ -334,6 +334,8 @@ class _HomePageState extends State<HomePage> {
         url += "&type=${type.toString().split("\.")[1].toLowerCase()}";
       }
 
+      print("API call : $url");
+
       /// At last go to [QuizPage]
       Navigator.push(
         context,
