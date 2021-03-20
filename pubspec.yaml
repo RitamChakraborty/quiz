@@ -20,7 +20,7 @@ flutter:
   assets:
     - assets/images/animals.webp
     - assets/images/anime.webp
-    - assets/images/art.png
+    - assets/images/art.webp
     - assets/images/bgames.webp
     - assets/images/books.webp
     - assets/images/cartoon.webp
@@ -32,10 +32,11 @@ flutter:
     - assets/images/games.webp
     - assets/images/geography.webp
     - assets/images/history.webp
-    - assets/images/knowledge.jpg
+    - assets/images/knowledge.webp
+    - assets/images/mathematics.webp
     - assets/images/music.webp
     - assets/images/mythology.webp
-    - assets/images/politics.png
+    - assets/images/politics.webp
     - assets/images/science.webp
     - assets/images/sports.webp
     - assets/images/television.webp
