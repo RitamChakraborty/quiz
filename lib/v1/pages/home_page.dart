@@ -5,12 +5,12 @@ import 'package:quiz/v1/helper/helper.dart';
 import 'package:quiz/v1/pages/quiz_page.dart';
 
 /// Home page for the quiz to select game properties
-class HomePage extends StatefulWidget {
+class HomePage1 extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePage1State createState() => _HomePage1State();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePage1State extends State<HomePage1> {
   /// Start the game with number of questions to be 10
   int numberOfQuestions = 10;
 

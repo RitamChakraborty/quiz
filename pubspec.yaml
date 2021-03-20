@@ -3,7 +3,7 @@ description: A quiz app in flutter.
 version: 1.1.0
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -35,7 +35,7 @@ flutter:
     - assets/images/knowledge.jpg
     - assets/images/music.webp
     - assets/images/mythology.webp
-    - assets/images/polities.png
+    - assets/images/politics.png
     - assets/images/science.webp
     - assets/images/sports.webp
     - assets/images/television.webp

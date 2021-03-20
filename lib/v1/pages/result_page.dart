@@ -69,7 +69,7 @@ class _ResultPageState extends State<ResultPage>
           () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage1()),
             );
           },
         ),
@@ -79,7 +79,7 @@ class _ResultPageState extends State<ResultPage>
           } else {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => HomePage1()),
             );
           }
         }),
