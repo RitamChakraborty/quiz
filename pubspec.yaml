@@ -17,3 +17,27 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/animals.webp
+    - assets/images/anime.webp
+    - assets/images/art.png
+    - assets/images/bgames.webp
+    - assets/images/books.webp
+    - assets/images/cartoon.webp
+    - assets/images/celebrities.webp
+    - assets/images/comics.webp
+    - assets/images/computers.webp
+    - assets/images/film.webp
+    - assets/images/gadgets.webp
+    - assets/images/games.webp
+    - assets/images/geography.webp
+    - assets/images/history.webp
+    - assets/images/knowledge.jpg
+    - assets/images/music.webp
+    - assets/images/mythology.webp
+    - assets/images/polities.png
+    - assets/images/science.webp
+    - assets/images/sports.webp
+    - assets/images/television.webp
+    - assets/images/theatres.webp
+    - assets/images/vehicles.webp

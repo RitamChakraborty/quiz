@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quiz/helper/constants.dart';
-import 'package:quiz/helper/helper.dart';
-import 'package:quiz/pages/quiz_page.dart';
+import 'package:quiz/v1/helper/constants.dart';
+import 'package:quiz/v1/helper/helper.dart';
+import 'package:quiz/v1/pages/quiz_page.dart';
 
 /// Home page for the quiz to select game properties
 class HomePage extends StatefulWidget {

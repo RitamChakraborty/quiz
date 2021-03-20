@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html_unescape/html_unescape_small.dart';
 import 'package:http/http.dart' as http;
-import 'package:quiz/model/question.dart';
-import 'package:quiz/pages/result_page.dart';
-import 'package:quiz/widgets/overlay_widget.dart';
+import 'package:quiz/v1/model/question.dart';
+import 'package:quiz/v1/pages/result_page.dart';
+import 'package:quiz/v1/widgets/overlay_widget.dart';
 
 class QuizPage extends StatefulWidget {
   final String _url;

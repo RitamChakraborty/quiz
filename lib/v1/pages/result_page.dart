@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/pages/home_page.dart';
+import 'package:quiz/v1/pages/home_page.dart';
 
 class ResultPage extends StatefulWidget {
   final int score;
