@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
 
     return Material(
         child: Scaffold(
-          floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(
         label: floatingActionButtonLabelText,
         onPressed: floatingActionButtonOnPressed,
         backgroundColor: Colors.white.withOpacity(0.9),
