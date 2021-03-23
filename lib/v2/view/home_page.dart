@@ -26,6 +26,9 @@ class HomePage extends StatelessWidget {
     /// I'm Feeling Lucky button action
     void floatingActionButtonOnPressed() {}
 
+    /// Start quiz when any category is pressed
+    void categoryTileOnPressed() {}
+
     // Widgets
     final floatingActionButtonLabelText = Text(
       "I'm Feeling Lucky",
@@ -47,9 +50,9 @@ class HomePage extends StatelessWidget {
                           .image,
                 ),
               ),
-              child: Container(
+              child: MaterialButton(
+                onPressed: categoryTileOnPressed,
                 color: Colors.black26,
-                padding: const EdgeInsets.all(8.0),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.center,
@@ -70,12 +73,13 @@ class HomePage extends StatelessWidget {
 
     return Material(
         child: Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
+          floatingActionButton: FloatingActionButton.extended(
         label: floatingActionButtonLabelText,
         onPressed: floatingActionButtonOnPressed,
         backgroundColor: Colors.white.withOpacity(0.9),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
