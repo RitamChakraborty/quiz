@@ -47,6 +47,23 @@ class HomePage extends StatelessWidget {
                           .image,
                 ),
               ),
+              child: Container(
+                color: Colors.black26,
+                padding: const EdgeInsets.all(8.0),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    child: Text(
+                      "${title.toUpperCase()}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         );
