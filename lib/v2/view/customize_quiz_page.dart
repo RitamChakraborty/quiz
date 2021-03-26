@@ -11,6 +11,9 @@ class CustomizeQuizPage extends StatelessWidget {
     /// Increase the question count
     void increaseCount() {}
 
+    /// Change the difficulty of the questions
+    void changeDifficulty() {}
+
     // Widgets
     Widget countWidget() {
       return Container(
@@ -32,6 +35,28 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
+    Widget difficultyButton(String difficulty) {
+      return Expanded(
+        child: MaterialButton(
+          onPressed: changeDifficulty,
+          child: Text(difficulty),
+        ),
+      );
+    }
+
+    Widget questionDifficultyPage() {
+      return Container(
+        child: Row(
+          children: [
+            difficultyButton("Easy"),
+            difficultyButton("Medium"),
+            difficultyButton("Hard"),
+            difficultyButton("Mixed"),
+          ],
+        ),
+      );
+    }
+
     return Material(
       color: Colors.grey.shade100,
       child: Column(
@@ -39,6 +64,7 @@ class CustomizeQuizPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           countWidget(),
+          questionDifficultyPage(),
         ],
       ),
     );
