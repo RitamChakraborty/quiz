@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomizeQuizPage extends StatelessWidget {
@@ -44,7 +45,7 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    Widget questionDifficultyPage() {
+    Widget questionDifficultyWidget() {
       return Container(
         child: Row(
           children: [
@@ -57,6 +58,13 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
+    Widget questionTypeWidget() {
+      return CupertinoSlidingSegmentedControl(
+        children: {0: Text("MCQ"), 1: Text("True-False"), 2: Text("Either")},
+        onValueChanged: (value) {},
+      );
+    }
+
     return Material(
       color: Colors.grey.shade100,
       child: Column(
@@ -64,7 +72,8 @@ class CustomizeQuizPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           countWidget(),
-          questionDifficultyPage(),
+          questionDifficultyWidget(),
+          questionTypeWidget(),
         ],
       ),
     );
