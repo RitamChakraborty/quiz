@@ -67,14 +67,28 @@ class CustomizeQuizPage extends StatelessWidget {
 
     return Material(
       color: Colors.grey.shade100,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          countWidget(),
-          questionDifficultyWidget(),
-          questionTypeWidget(),
-        ],
+      child: Scaffold(
+        floatingActionButton: MaterialButton(
+          onPressed: () {},
+          color: Colors.pink,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          child: Text("Let's GO!"),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            countWidget(),
+            questionDifficultyWidget(),
+            questionTypeWidget(),
+          ],
+        ),
       ),
     );
   }
