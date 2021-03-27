@@ -6,32 +6,27 @@ class CustomizeQuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Functions
 
-    /// Decrease the question count
-    void decreaseCount() {}
-
-    /// Increase the question count
-    void increaseCount() {}
+    /// Change question count
+    void changeQuestionCount(double value) {}
 
     /// Change the difficulty of the questions
     void changeDifficulty() {}
 
+    /// Change question type
+    void changeQuestionType(dynamic value) {}
+
+    /// Start the quiz by navigating to the quiz page
+    void startQuiz() {}
+
     // Widgets
     Widget countWidget() {
       return Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FloatingActionButton(
-              onPressed: decreaseCount,
-              child: Icon(Icons.remove),
-            ),
-            Text("10"),
-            FloatingActionButton(
-              onPressed: increaseCount,
-              child: Icon(Icons.add),
-            )
-          ],
+        child: Slider(
+          value: 10.0,
+          onChanged: changeQuestionCount,
+          min: 1,
+          max: 50,
+          divisions: 1,
         ),
       );
     }
@@ -60,8 +55,12 @@ class CustomizeQuizPage extends StatelessWidget {
 
     Widget questionTypeWidget() {
       return CupertinoSlidingSegmentedControl(
-        children: {0: Text("MCQ"), 1: Text("True-False"), 2: Text("Either")},
-        onValueChanged: (value) {},
+        children: {
+          0: Text("MCQ"),
+          1: Text("True-False"),
+          2: Text("Either"),
+        },
+        onValueChanged: changeQuestionType,
       );
     }
 
@@ -69,7 +68,7 @@ class CustomizeQuizPage extends StatelessWidget {
       color: Colors.grey.shade100,
       child: Scaffold(
         floatingActionButton: MaterialButton(
-          onPressed: () {},
+          onPressed: startQuiz,
           color: Colors.pink,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
