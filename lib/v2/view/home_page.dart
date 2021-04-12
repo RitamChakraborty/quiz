@@ -1,15 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:quiz/v2/service/quiz_service.dart';
 
 class HomePage extends StatelessWidget {
   final QuizService _quizService = QuizService();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     List<String> categories = _quizService.categories;
 
     // Functions
+
+    /// Listen to scroll direction
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        print('up');
+      } else {
+        print('down');
+      }
+    });
 
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
@@ -84,6 +96,7 @@ class HomePage extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: GridView.builder(
+            controller: _scrollController,
             itemCount: categories.length,
             itemBuilder: (BuildContext context, int index) =>
                 categoryTile(title: categories[index]),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/v2/view/customize_quiz_page.dart';
+import 'package:quiz/v2/view/home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.grey[800],
         buttonColor: Colors.grey,
       ),
-      home: CustomizeQuizPage(),
+      home: HomePage(),
     );
   }
 }
