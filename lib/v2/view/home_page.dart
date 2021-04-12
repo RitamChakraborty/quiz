@@ -4,25 +4,56 @@ import 'package:flutter/rendering.dart';
 import 'package:quiz/v2/service/quiz_service.dart';
 import 'package:quiz/v2/widget/feeling_lucky_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final QuizService _quizService = QuizService();
+
   final ScrollController _scrollController = ScrollController();
+
+  AnimationController _animationController;
+
+  bool _show = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     List<String> categories = _quizService.categories;
 
-    // Functions
-
     /// Listen to scroll direction
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
-        print('up');
+        if (!_show) {
+          _show = true;
+          _animationController.forward();
+        }
       } else {
-        print('down');
+        if (_show) {
+          _show = false;
+          _animationController.reverse();
+        }
       }
     });
+
+    // Functions
 
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
@@ -83,6 +114,7 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
       floatingActionButton: FeelingLuckyButton(
         onPressed: feelingLuckyButtonOnPressed,
+        animationController: _animationController,
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
