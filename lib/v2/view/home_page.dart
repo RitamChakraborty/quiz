@@ -19,11 +19,29 @@ class _HomePageState extends State<HomePage>
 
   bool _show = true;
 
+  /// Listen to scroll direction
+  /// And hide and show fab animation direction
+  void _scrollListener() {
+    if (_scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
+      if (!_show) {
+        _show = true;
+        _animationController.forward();
+      }
+    } else {
+      if (_show) {
+        _show = false;
+        _animationController.reverse();
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _scrollController.addListener(_scrollListener);
     _animationController.forward();
   }
 
@@ -36,22 +54,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     List<String> categories = _quizService.categories;
-
-    /// Listen to scroll direction
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if (!_show) {
-          _show = true;
-          _animationController.forward();
-        }
-      } else {
-        if (_show) {
-          _show = false;
-          _animationController.reverse();
-        }
-      }
-    });
 
     // Functions
 
