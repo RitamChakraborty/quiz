@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:quiz/v2/service/quiz_service.dart';
+import 'package:quiz/v2/widget/feeling_lucky_button.dart';
 
 class HomePage extends StatelessWidget {
   final QuizService _quizService = QuizService();
@@ -36,19 +37,14 @@ class HomePage extends StatelessWidget {
     }
 
     /// I'm Feeling Lucky button action
-    void floatingActionButtonOnPressed() {}
+    final VoidCallback feelingLuckyButtonOnPressed = () {
+      print("I'm Feeling Lucky");
+    };
 
     /// Start quiz when any category is pressed
     void categoryTileOnPressed() {}
 
     // Widgets
-    final floatingActionButtonLabelText = Text(
-      "I'm Feeling Lucky",
-      style: TextStyle(
-        color: Colors.blue,
-      ),
-    );
-
     Widget categoryTile({@required String title}) => Container(
           padding: const EdgeInsets.all(16),
           child: Card(
@@ -85,10 +81,8 @@ class HomePage extends StatelessWidget {
 
     return Material(
         child: Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        label: floatingActionButtonLabelText,
-        onPressed: floatingActionButtonOnPressed,
-        backgroundColor: Colors.white.withOpacity(0.9),
+      floatingActionButton: FeelingLuckyButton(
+        onPressed: feelingLuckyButtonOnPressed,
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
