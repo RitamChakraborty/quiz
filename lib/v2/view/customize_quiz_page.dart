@@ -36,18 +36,28 @@ class CustomizeQuizPage extends StatelessWidget {
 
     Widget difficultyButton(String difficulty) {
       return Expanded(
-        child: MaterialButton(
-          onPressed: changeDifficulty,
-          child: Text(difficulty),
+        child: GestureDetector(
+          onTap: changeDifficulty,
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 400),
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            height: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.green,
+            ),
+            child: Text(difficulty),
+          ),
         ),
       );
     }
 
     Widget questionDifficultyContainer() {
       return Expanded(
-        child: Container(
-          color: Colors.green,
-          child: Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+          child: Flex(
+            direction: Axis.horizontal,
             children: [
               difficultyButton("Easy"),
               difficultyButton("Medium"),
