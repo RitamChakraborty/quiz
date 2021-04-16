@@ -19,14 +19,17 @@ class CustomizeQuizPage extends StatelessWidget {
     void startQuiz() {}
 
     // Widgets
-    Widget countWidget() {
-      return Container(
-        child: Slider(
-          value: 10.0,
-          onChanged: changeQuestionCount,
-          min: 1,
-          max: 50,
-          divisions: 1,
+    Widget countCounter() {
+      return Expanded(
+        child: Container(
+          color: Colors.red,
+          child: Slider(
+            value: 10.0,
+            onChanged: changeQuestionCount,
+            min: 1,
+            max: 50,
+            divisions: 1,
+          ),
         ),
       );
     }
@@ -40,52 +43,72 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    Widget questionDifficultyWidget() {
-      return Container(
-        child: Row(
-          children: [
-            difficultyButton("Easy"),
-            difficultyButton("Medium"),
-            difficultyButton("Hard"),
-            difficultyButton("Mixed"),
-          ],
+    Widget questionDifficultyContainer() {
+      return Expanded(
+        child: Container(
+          color: Colors.green,
+          child: Row(
+            children: [
+              difficultyButton("Easy"),
+              difficultyButton("Medium"),
+              difficultyButton("Hard"),
+              difficultyButton("Mixed"),
+            ],
+          ),
         ),
       );
     }
 
-    Widget questionTypeWidget() {
-      return CupertinoSlidingSegmentedControl(
-        children: {
-          0: Text("MCQ"),
-          1: Text("True-False"),
-          2: Text("Either"),
-        },
-        onValueChanged: changeQuestionType,
+    Widget questionTypeContainer() {
+      return Expanded(
+        child: Container(
+          color: Colors.blue,
+          child: CupertinoSlidingSegmentedControl(
+            children: {
+              0: Text("MCQ"),
+              1: Text("True-False"),
+              2: Text("Either"),
+            },
+            onValueChanged: changeQuestionType,
+          ),
+        ),
       );
     }
+
+    Widget startQuizButton = MaterialButton(
+      onPressed: startQuiz,
+      color: Colors.pink,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      child: Text("Let's GO!"),
+    );
 
     return Material(
       color: Colors.grey.shade100,
       child: Scaffold(
-        floatingActionButton: MaterialButton(
-          onPressed: startQuiz,
-          color: Colors.pink,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-          ),
-          child: Text("Let's GO!"),
-        ),
+        floatingActionButton: startQuizButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: Column(
+        body: Flex(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
+          direction: Axis.vertical,
           children: [
-            countWidget(),
-            questionDifficultyWidget(),
-            questionTypeWidget(),
+            Flexible(
+              flex: 1,
+              child: countCounter(),
+            ),
+            Flexible(
+              flex: 1,
+              child: questionDifficultyContainer(),
+            ),
+            Flexible(
+              flex: 1,
+              child: questionTypeContainer(),
+            ),
           ],
         ),
       ),
