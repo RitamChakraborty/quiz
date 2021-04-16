@@ -78,31 +78,46 @@ class _HomePageState extends State<HomePage>
     void categoryTileOnPressed() {}
 
     // Widgets
-    Widget categoryTile({@required String title}) => Container(
-          padding: const EdgeInsets.all(16),
-          child: Card(
-            elevation: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image:
-                      Image.asset("assets/images/${title.toLowerCase()}.webp")
-                          .image,
+    Widget categoryTile({@required String title}) => InkWell(
+          onTap: categoryTileOnPressed,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Card(
+              elevation: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image:
+                        Image.asset("assets/images/${title.toLowerCase()}.webp")
+                            .image,
+                  ),
                 ),
-              ),
-              child: MaterialButton(
-                onPressed: categoryTileOnPressed,
-                color: Colors.black26,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    child: Text(
-                      "${title.toUpperCase()}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black54,
+                      ],
+                    ),
+                  ),
+                  child: FittedBox(
+                    alignment: Alignment.bottomRight,
+                    fit: BoxFit.scaleDown,
+                    child: SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, bottom: 12, right: 8),
+                        child: Text(
+                          "${title.toUpperCase()}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
                       ),
                     ),
                   ),
