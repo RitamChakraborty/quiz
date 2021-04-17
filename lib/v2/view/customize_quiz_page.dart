@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomizeQuizPage extends StatelessWidget {
+class CustomizeQuizPage extends StatefulWidget {
+  @override
+  _CustomizeQuizPageState createState() => _CustomizeQuizPageState();
+}
+
+class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
+  int _selectedDifficultyIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     // Functions
@@ -10,7 +17,11 @@ class CustomizeQuizPage extends StatelessWidget {
     void changeQuestionCount(double value) {}
 
     /// Change the difficulty of the questions
-    void changeDifficulty() {}
+    void changeDifficulty(int index) {
+      setState(() {
+        _selectedDifficultyIndex = index;
+      });
+    }
 
     /// Change question type
     void changeQuestionType(dynamic value) {}
@@ -34,17 +45,42 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    Widget difficultyButton(String difficulty) {
+    final selectedBoxShadow = BoxShadow(
+      color: Colors.grey.shade300,
+      offset: const Offset(8, 8),
+      blurRadius: 5,
+      spreadRadius: 3,
+    );
+
+    final unselectedBoxShadow = BoxShadow(
+      color: Colors.grey.shade400,
+      offset: const Offset(6, 6),
+      blurRadius: 4,
+      spreadRadius: 3,
+    );
+
+    final selectedMargin = const EdgeInsets.all(4.0);
+
+    final unselectedMargin = const EdgeInsets.all(8.0);
+
+    Widget difficultyButton(int index, String difficulty) {
       return Expanded(
         child: GestureDetector(
-          onTap: changeDifficulty,
+          onTap: () => changeDifficulty(index),
           child: AnimatedContainer(
+            margin: index == _selectedDifficultyIndex
+                ? selectedMargin
+                : unselectedMargin,
             duration: Duration(milliseconds: 400),
-            margin: const EdgeInsets.symmetric(horizontal: 8),
             height: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.green,
+              boxShadow: [
+                index == _selectedDifficultyIndex
+                    ? selectedBoxShadow
+                    : unselectedBoxShadow
+              ],
             ),
             child: Text(difficulty),
           ),
@@ -59,10 +95,10 @@ class CustomizeQuizPage extends StatelessWidget {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              difficultyButton("Easy"),
-              difficultyButton("Medium"),
-              difficultyButton("Hard"),
-              difficultyButton("Mixed"),
+              difficultyButton(0, "Easy"),
+              difficultyButton(1, "Medium"),
+              difficultyButton(2, "Hard"),
+              difficultyButton(3, "Mixed"),
             ],
           ),
         ),
@@ -102,24 +138,16 @@ class CustomizeQuizPage extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: startQuizButton,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          direction: Axis.vertical,
-          children: [
-            Flexible(
-              flex: 1,
-              child: countCounter(),
-            ),
-            Flexible(
-              flex: 1,
-              child: questionDifficultyContainer(),
-            ),
-            Flexible(
-              flex: 1,
-              child: questionTypeContainer(),
-            ),
-          ],
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              countCounter(),
+              questionDifficultyContainer(),
+              questionTypeContainer(),
+            ],
+          ),
         ),
       ),
     );
