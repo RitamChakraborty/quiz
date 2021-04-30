@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CustomizeQuizPage extends StatefulWidget {
   @override
@@ -8,13 +9,18 @@ class CustomizeQuizPage extends StatefulWidget {
 
 class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
   int _selectedDifficultyIndex = 0;
+  int _questionCount = 10;
 
   @override
   Widget build(BuildContext context) {
     // Functions
 
     /// Change question count
-    void changeQuestionCount(double value) {}
+    void changeQuestionCount(double value) {
+      setState(() {
+        _questionCount = value.toInt();
+      });
+    }
 
     /// Change the difficulty of the questions
     void changeDifficulty(int index) {
@@ -34,12 +40,32 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
       return Expanded(
         child: Container(
           color: Colors.red,
-          child: Slider(
-            value: 10.0,
-            onChanged: changeQuestionCount,
-            min: 1,
-            max: 50,
-            divisions: 1,
+          child: Flex(
+            direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                flex: 1,
+                child: SleekCircularSlider(
+                  appearance: CircularSliderAppearance(),
+                  initialValue: 10.0,
+                  min: 1,
+                  max: 50,
+                  onChange: changeQuestionCount,
+                  innerWidget: (value) {
+                    return Container();
+                  },
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(16),
+                  child: Text(_questionCount.toString()),
+                ),
+              ),
+            ],
           ),
         ),
       );
