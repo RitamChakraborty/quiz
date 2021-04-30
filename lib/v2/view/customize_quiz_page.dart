@@ -159,33 +159,34 @@ class CustomizeQuizPage extends StatelessWidget {
     );
 
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
-        bloc: quizCustomizer,
-        listener: (context, state) {
-          if (state.runtimeType == StartQuizState) {
-            Navigator.of(context)
-                .push(QuizPage.route(quizCustomizer.quizParameter));
-          }
-        },
-        builder: (context, state) {
-          return Material(
-            color: Colors.grey.shade100,
-            child: Scaffold(
-              floatingActionButton: startQuizButton,
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              body: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    countCounter(),
-                    questionDifficultyContainer(),
-                    questionTypeContainer(),
-                  ],
-                ),
+      bloc: quizCustomizer,
+      listener: (context, state) {
+        if (state.runtimeType == StartQuizState) {
+          Navigator.of(context)
+              .push(QuizPage.route(quizCustomizer.quizParameter));
+        }
+      },
+      builder: (context, state) {
+        return Material(
+          color: Colors.grey.shade100,
+          child: Scaffold(
+            floatingActionButton: startQuizButton,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            body: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  countCounter(),
+                  questionDifficultyContainer(),
+                  questionTypeContainer(),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
