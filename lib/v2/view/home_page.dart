@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/v2/service/quiz_customizer_cubit.dart';
 import 'package:quiz/v2/service/quiz_service.dart';
 import 'package:quiz/v2/widget/feeling_lucky_button.dart';
 
@@ -53,6 +55,8 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    QuizCustomizerCubit quizCustomizer =
+        BlocProvider.of<QuizCustomizerCubit>(context);
     List<String> categories = _quizService.categories;
 
     // Functions
@@ -79,7 +83,9 @@ class _HomePageState extends State<HomePage>
 
     // Widgets
     Widget categoryTile({@required String title}) => InkWell(
-          onTap: categoryTileOnPressed,
+          onTap: () {
+            quizCustomizer.selectCategory(title);
+          },
           child: Container(
             padding: const EdgeInsets.all(16),
             child: Card(
@@ -91,32 +97,32 @@ class _HomePageState extends State<HomePage>
                     image:
                         Image.asset("assets/images/${title.toLowerCase()}.webp")
                             .image,
-                  ),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black54,
+                  ],
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black54,
-                      ],
-                    ),
-                  ),
-                  child: FittedBox(
-                    alignment: Alignment.bottomRight,
-                    fit: BoxFit.scaleDown,
-                    child: SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, bottom: 12, right: 8),
-                        child: Text(
-                          "${title.toUpperCase()}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
+              ),
+              child: FittedBox(
+                alignment: Alignment.bottomRight,
+                fit: BoxFit.scaleDown,
+                child: SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, bottom: 12, right: 8),
+                    child: Text(
+                      "${title.toUpperCase()}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
                         ),
                       ),
                     ),
@@ -127,29 +133,36 @@ class _HomePageState extends State<HomePage>
           ),
         );
 
-    return Material(
-        child: Scaffold(
-      floatingActionButton: FeelingLuckyButton(
-        onPressed: feelingLuckyButtonOnPressed,
-        animationController: _animationController,
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
-      body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: GridView.builder(
-            controller: _scrollController,
-            itemCount: categories.length,
-            itemBuilder: (BuildContext context, int index) =>
-                categoryTile(title: categories[index]),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: getMaxCrossAxisExtend(),
-              childAspectRatio: 1,
+    return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
+        bloc: quizCustomizer,
+        listener: (context, state) {
+          print(quizCustomizer.quizCategory);
+        },
+        builder: (context, state) {
+          return Material(
+              child: Scaffold(
+            floatingActionButton: FeelingLuckyButton(
+              onPressed: feelingLuckyButtonOnPressed,
+              animationController: _animationController,
             ),
-          ),
-        ),
-      ),
-    ));
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniCenterFloat,
+            body: SafeArea(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: GridView.builder(
+                  controller: _scrollController,
+                  itemCount: categories.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      categoryTile(title: categories[index]),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: getMaxCrossAxisExtend(),
+                    childAspectRatio: 1,
+                  ),
+                ),
+              ),
+            ),
+          ));
+        });
   }
 }
