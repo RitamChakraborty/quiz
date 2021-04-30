@@ -5,6 +5,9 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 class CustomizeQuizPage extends StatefulWidget {
   @override
   _CustomizeQuizPageState createState() => _CustomizeQuizPageState();
+
+  static Route<dynamic> router() =>
+      MaterialPageRoute(builder: (_) => CustomizeQuizPage());
 }
 
 class _CustomizeQuizPageState extends State<CustomizeQuizPage> {

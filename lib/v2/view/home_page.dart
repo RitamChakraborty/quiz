@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/v2/service/quiz_customizer_cubit.dart';
 import 'package:quiz/v2/service/quiz_service.dart';
+import 'package:quiz/v2/view/customize_quiz_page.dart';
 import 'package:quiz/v2/widget/feeling_lucky_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage>
 
     /// I'm Feeling Lucky button action
     final VoidCallback feelingLuckyButtonOnPressed = () {
-      print("I'm Feeling Lucky");
+      quizCustomizer.selectCategory("any");
     };
 
     /// Start quiz when any category is pressed
@@ -136,7 +137,8 @@ class _HomePageState extends State<HomePage>
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
         bloc: quizCustomizer,
         listener: (context, state) {
-          print(quizCustomizer.quizCategory);
+          print("Category : ${quizCustomizer.quizCategory}");
+          Navigator.of(context).push(CustomizeQuizPage.router());
         },
         builder: (context, state) {
           return Material(
