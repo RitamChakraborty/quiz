@@ -8,8 +8,8 @@ class CustomizeQuizPage extends StatefulWidget {
 }
 
 class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
-  int _selectedDifficultyIndex = 0;
   int _questionCount = 10;
+  int _selectedDifficultyIndex = 0;
   int _questionTypeIndex = 0;
 
   @override
@@ -38,7 +38,11 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
     }
 
     /// Start the quiz by navigating to the quiz page
-    void startQuiz() {}
+    void startQuiz() {
+      print("Question Count : $_questionCount");
+      print("Question Difficulty Index : $_selectedDifficultyIndex");
+      print("Question Type Index : $_questionTypeIndex");
+    }
 
     // Widgets
     Widget countCounter() {
