@@ -10,6 +10,7 @@ class CustomizeQuizPage extends StatefulWidget {
 class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
   int _selectedDifficultyIndex = 0;
   int _questionCount = 10;
+  int _questionTypeIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,11 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
     }
 
     /// Change question type
-    void changeQuestionType(dynamic value) {}
+    void changeQuestionType(dynamic value) {
+      setState(() {
+        _questionTypeIndex = value as int;
+      });
+    }
 
     /// Start the quiz by navigating to the quiz page
     void startQuiz() {}
