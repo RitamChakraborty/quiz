@@ -27,7 +27,7 @@ class QuizParameter {
   String toString() {
     return API +
         "?amount=$_amount" +
-        "${_category == null ? "" : "&amount=" + _amount.toString()}" +
+        "${_category == null ? "" : "&category=" + _category.toString()}" +
         "${_difficulty == null ? "" : "&difficulty=" + difficulty}" +
         "${_type == null ? "" : "&type=" + type}";
   }

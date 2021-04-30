@@ -29,10 +29,11 @@ void main() {
   test("getQuizParameter function test 2", () {
     // given
     int amount = 10;
-    int categoryIndex = 0;
+    int categoryIndex = 4;
     int difficultyIndex = 0;
-    int questionTypeIndex = 0;
-    String expectedValue = "https://opentdb.com/api.php?amount=10";
+    int questionTypeIndex = 2;
+    String expectedValue =
+        "https://opentdb.com/api.php?amount=10&category=12&type=boolean";
 
     // When
     QuizParameter quizParameter = quizService.getQuizParameter(
@@ -52,7 +53,7 @@ void main() {
     int amount = 10;
     int categoryIndex = 1;
     int difficultyIndex = 2;
-    int questionTypeIndex = 1;
+    int questionTypeIndex = 2;
     String expectedValue =
         "https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=boolean";
 
