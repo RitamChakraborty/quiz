@@ -13,12 +13,12 @@ class StartQuizState extends AbstractQuizCustomizerState {}
 class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   QuizCustomizerCubit() : super(InitialQuizCustomizerState());
 
-  String _quizCategory = "any";
+  int _quizCategory = 0;
   int _questionCount = 10;
   int _difficultyIndex = 0;
   int _questionTypeIndex = 0;
 
-  String get quizCategory => _quizCategory;
+  int get quizCategory => _quizCategory;
 
   int get questionCount => _questionCount;
 
@@ -26,7 +26,7 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   int get questionTypeIndex => _questionTypeIndex;
 
-  void selectCategory(String category) {
+  void selectCategory(int category) {
     _quizCategory = category;
     emit(QuizCategoryChosenState());
   }

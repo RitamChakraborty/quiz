@@ -60,8 +60,6 @@ class _HomePageState extends State<HomePage>
         BlocProvider.of<QuizCustomizerCubit>(context);
     List<String> categories = _quizService.categories;
 
-    // Functions
-
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
       MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -76,13 +74,13 @@ class _HomePageState extends State<HomePage>
 
     /// I'm Feeling Lucky button action
     final VoidCallback feelingLuckyButtonOnPressed = () {
-      quizCustomizer.selectCategory("any");
+      quizCustomizer.selectCategory(0);
     };
 
     // Widgets
-    Widget categoryTile({@required String title}) => InkWell(
+    Widget categoryTile({@required int index}) => InkWell(
           onTap: () {
-            quizCustomizer.selectCategory(title);
+            quizCustomizer.selectCategory(index);
           },
           child: Container(
             padding: const EdgeInsets.all(16),
@@ -92,9 +90,9 @@ class _HomePageState extends State<HomePage>
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image:
-                        Image.asset("assets/images/${title.toLowerCase()}.webp")
-                            .image,
+                    image: Image.asset(
+                            "assets/images/${categories[index].toLowerCase()}.webp")
+                        .image,
                   ),
                 ),
                 child: Container(
@@ -116,7 +114,7 @@ class _HomePageState extends State<HomePage>
                         padding: const EdgeInsets.only(
                             left: 16.0, bottom: 12, right: 8),
                         child: Text(
-                          "${title.toUpperCase()}",
+                          "${categories[index].toUpperCase()}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -132,15 +130,15 @@ class _HomePageState extends State<HomePage>
         );
 
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
-        bloc: quizCustomizer,
-        listener: (context, state) {
-          if (state.runtimeType == QuizCategoryChosenState) {
-            Navigator.of(context).push(CustomizeQuizPage.router());
-          }
-        },
-        builder: (context, state) {
-          return Material(
-              child: Scaffold(
+      bloc: quizCustomizer,
+      listener: (context, state) {
+        if (state.runtimeType == QuizCategoryChosenState) {
+          Navigator.of(context).push(CustomizeQuizPage.router());
+        }
+      },
+      builder: (context, state) {
+        return Material(
+          child: Scaffold(
             floatingActionButton: FeelingLuckyButton(
               onPressed: feelingLuckyButtonOnPressed,
               animationController: _animationController,
@@ -154,7 +152,7 @@ class _HomePageState extends State<HomePage>
                   controller: _scrollController,
                   itemCount: categories.length,
                   itemBuilder: (BuildContext context, int index) =>
-                      categoryTile(title: categories[index]),
+                      categoryTile(index: index),
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: getMaxCrossAxisExtend(),
                     childAspectRatio: 1,
@@ -162,7 +160,9 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
             ),
-          ));
-        });
+          ),
+        );
+      },
+    );
   }
 }
