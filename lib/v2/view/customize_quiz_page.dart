@@ -1,50 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/v2/service/quiz_customizer_cubit.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class CustomizeQuizPage extends StatefulWidget {
-  @override
-  _CustomizeQuizPageState createState() => _CustomizeQuizPageState();
-
+class CustomizeQuizPage extends StatelessWidget {
   static Route<dynamic> router() =>
       MaterialPageRoute(builder: (_) => CustomizeQuizPage());
-}
-
-class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
-  int _questionCount = 10;
-  int _selectedDifficultyIndex = 0;
-  int _questionTypeIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    // Functions
+    QuizCustomizerCubit quizCustomizer =
+        BlocProvider.of<QuizCustomizerCubit>(context);
 
     /// Change question count
     void changeQuestionCount(double value) {
-      setState(() {
-        _questionCount = value.toInt();
-      });
+      quizCustomizer.changeQuestionCount(value.toInt());
     }
 
     /// Change the difficulty of the questions
     void changeDifficulty(int index) {
-      setState(() {
-        _selectedDifficultyIndex = index;
-      });
+      quizCustomizer.changeDifficulty(index);
     }
 
     /// Change question type
     void changeQuestionType(dynamic value) {
-      setState(() {
-        _questionTypeIndex = value as int;
-      });
+      quizCustomizer.changeQuestionType(value as int);
     }
 
     /// Start the quiz by navigating to the quiz page
     void startQuiz() {
-      print("Question Count : $_questionCount");
-      print("Question Difficulty Index : $_selectedDifficultyIndex");
-      print("Question Type Index : $_questionTypeIndex");
+      print("Count : ${quizCustomizer.questionCount}");
+      print("Difficulty Index : ${quizCustomizer.difficultyIndex}");
+      print("Type Index : ${quizCustomizer.questionTypeIndex}");
+
+      quizCustomizer.startQuiz();
     }
 
     // Widgets
@@ -74,7 +64,7 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
                 child: Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.all(16),
-                  child: Text(_questionCount.toString()),
+                  child: Text("${quizCustomizer.questionCount}"),
                 ),
               ),
             ],
@@ -106,7 +96,7 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
         child: GestureDetector(
           onTap: () => changeDifficulty(index),
           child: AnimatedContainer(
-            margin: index == _selectedDifficultyIndex
+            margin: index == quizCustomizer.difficultyIndex
                 ? selectedMargin
                 : unselectedMargin,
             duration: Duration(milliseconds: 400),
@@ -115,7 +105,7 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
             decoration: BoxDecoration(
               color: Colors.green,
               boxShadow: [
-                index == _selectedDifficultyIndex
+                index == quizCustomizer.difficultyIndex
                     ? selectedBoxShadow
                     : unselectedBoxShadow
               ],
@@ -171,23 +161,33 @@ class _CustomizeQuizPageState extends State<CustomizeQuizPage> {
       child: Text("Let's GO!"),
     );
 
-    return Material(
-      color: Colors.grey.shade100,
-      child: Scaffold(
-        floatingActionButton: startQuizButton,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              countCounter(),
-              questionDifficultyContainer(),
-              questionTypeContainer(),
-            ],
-          ),
-        ),
-      ),
-    );
+    return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
+        bloc: quizCustomizer,
+        listener: (context, state) {
+          if (state.runtimeType == StartQuizState) {
+            // Todo: Start quiz
+          }
+        },
+        builder: (context, state) {
+          return Material(
+            color: Colors.grey.shade100,
+            child: Scaffold(
+              floatingActionButton: startQuizButton,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              body: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    countCounter(),
+                    questionDifficultyContainer(),
+                    questionTypeContainer(),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

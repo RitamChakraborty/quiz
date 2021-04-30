@@ -79,9 +79,6 @@ class _HomePageState extends State<HomePage>
       quizCustomizer.selectCategory("any");
     };
 
-    /// Start quiz when any category is pressed
-    void categoryTileOnPressed() {}
-
     // Widgets
     Widget categoryTile({@required String title}) => InkWell(
           onTap: () {
@@ -137,8 +134,9 @@ class _HomePageState extends State<HomePage>
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
         bloc: quizCustomizer,
         listener: (context, state) {
-          print("Category : ${quizCustomizer.quizCategory}");
-          Navigator.of(context).push(CustomizeQuizPage.router());
+          if (state.runtimeType == QuizCategoryChosenState) {
+            Navigator.of(context).push(CustomizeQuizPage.router());
+          }
         },
         builder: (context, state) {
           return Material(
