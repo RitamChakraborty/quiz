@@ -97,32 +97,32 @@ class _HomePageState extends State<HomePage>
                     image:
                         Image.asset("assets/images/${title.toLowerCase()}.webp")
                             .image,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black54,
-                  ],
+                  ),
                 ),
-              ),
-              child: FittedBox(
-                alignment: Alignment.bottomRight,
-                fit: BoxFit.scaleDown,
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, bottom: 12, right: 8),
-                    child: Text(
-                      "${title.toUpperCase()}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black54,
+                      ],
+                    ),
+                  ),
+                  child: FittedBox(
+                    alignment: Alignment.bottomRight,
+                    fit: BoxFit.scaleDown,
+                    child: SizedBox(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, bottom: 12, right: 8),
+                        child: Text(
+                          "${title.toUpperCase()}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
                         ),
                       ),
                     ),
