@@ -165,7 +165,7 @@ class CustomizeQuizPage extends StatelessWidget {
         bloc: quizCustomizer,
         listener: (context, state) {
           if (state.runtimeType == StartQuizState) {
-            // Todo: Start quiz
+            print(quizCustomizer.quizParameter);
           }
         },
         builder: (context, state) {

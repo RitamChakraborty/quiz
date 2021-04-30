@@ -72,12 +72,12 @@ class QuizService {
     }
 
     switch (questionTypeIndex) {
-      case 1:
+      case 0:
         {
           type = "multiple";
           break;
         }
-      case 2:
+      case 1:
         {
           type = "boolean";
           break;

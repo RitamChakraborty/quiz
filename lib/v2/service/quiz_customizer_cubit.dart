@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/v2/mode/question_parameter.dart';
+import 'package:quiz/v2/service/quiz_service.dart';
 
 abstract class AbstractQuizCustomizerState {}
 
@@ -13,10 +15,14 @@ class StartQuizState extends AbstractQuizCustomizerState {}
 class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   QuizCustomizerCubit() : super(InitialQuizCustomizerState());
 
+  final QuizService _quizService = QuizService();
+  QuizParameter _quizParameter;
   int _quizCategory = 0;
   int _questionCount = 10;
   int _difficultyIndex = 0;
   int _questionTypeIndex = 0;
+
+  QuizParameter get quizParameter => _quizParameter;
 
   int get quizCategory => _quizCategory;
 
@@ -46,5 +52,14 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     emit(ParameterUpdatedState());
   }
 
-  void startQuiz() => emit(StartQuizState());
+  void startQuiz() {
+    _quizParameter = _quizService.getQuizParameter(
+      categoryIndex: quizCategory,
+      questionCount: questionCount,
+      difficultyIndex: difficultyIndex,
+      questionTypeIndex: questionTypeIndex,
+    );
+
+    emit(StartQuizState());
+  }
 }

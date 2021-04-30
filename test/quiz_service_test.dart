@@ -31,7 +31,7 @@ void main() {
     int amount = 10;
     int categoryIndex = 4;
     int difficultyIndex = 0;
-    int questionTypeIndex = 2;
+    int questionTypeIndex = 1;
     String expectedValue =
         "https://opentdb.com/api.php?amount=10&category=12&type=boolean";
 
@@ -53,7 +53,7 @@ void main() {
     int amount = 10;
     int categoryIndex = 1;
     int difficultyIndex = 2;
-    int questionTypeIndex = 2;
+    int questionTypeIndex = 1;
     String expectedValue =
         "https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=boolean";
 
