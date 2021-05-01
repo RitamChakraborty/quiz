@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:quiz/v2/mode/question_parameter.dart';
+import 'package:quiz/model/question_parameter.dart';
 
 /// All the categories of [Question]
 enum Category {

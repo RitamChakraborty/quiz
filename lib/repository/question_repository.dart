@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:quiz/v2/mode/question.dart';
-import 'package:quiz/v2/mode/question_parameter.dart';
+import 'package:quiz/model/question.dart';
+import 'package:quiz/model/question_parameter.dart';
 
 class QuestionRepository {
   final http.Client _client = http.Client();

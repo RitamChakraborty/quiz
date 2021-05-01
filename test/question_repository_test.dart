@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quiz/v2/mode/question.dart';
-import 'package:quiz/v2/mode/question_parameter.dart';
-import 'package:quiz/v2/repository/question_repository.dart';
+import 'package:quiz/model/question.dart';
+import 'package:quiz/model/question_parameter.dart';
+import 'package:quiz/repository/question_repository.dart';
 
 void main() {
   final QuestionRepository questionRepository = QuestionRepository();

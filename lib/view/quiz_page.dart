@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz/v2/mode/question.dart';
-import 'package:quiz/v2/mode/question_parameter.dart';
-import 'package:quiz/v2/service/question_service_provider.dart';
+import 'package:quiz/model/question.dart';
+import 'package:quiz/model/question_parameter.dart';
+import 'package:quiz/service/question_service_provider.dart';
 
 class QuizPage extends StatelessWidget {
   static Route<dynamic> route(QuizParameter quizParameter) =>
@@ -23,6 +23,10 @@ class QuizPage extends StatelessWidget {
 
         if (questions == null) {
           questionService.fetchQuestion(_quizParameter);
+
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return Material(

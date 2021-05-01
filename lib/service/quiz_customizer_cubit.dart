@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/v2/mode/question_parameter.dart';
-import 'package:quiz/v2/service/quiz_service.dart';
+import 'package:quiz/model/question_parameter.dart';
+import 'package:quiz/service/quiz_service.dart';
 
 abstract class AbstractQuizCustomizerState {}
 

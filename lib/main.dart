@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/v2/service/quiz_customizer_cubit.dart';
-import 'package:quiz/v2/view/home_page.dart';
+import 'package:quiz/service/quiz_customizer_cubit.dart';
+import 'package:quiz/view/home_page.dart';
 
 void main() => runApp(MyApp());
 
