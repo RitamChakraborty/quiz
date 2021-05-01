@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_parameter.dart';
+import 'package:quiz/model/question_type.dart';
+import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_service.dart';
 
 abstract class AbstractQuizCustomizerState {}
@@ -21,6 +24,9 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   int _questionCount = 10;
   int _difficultyIndex = 0;
   int _questionTypeIndex = 0;
+  QuestionCategory _category = QuestionCategory.ANY;
+  QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
+  QuestionType _type = QuestionType.ANY;
 
   QuizParameter get quizParameter => _quizParameter;
 
@@ -32,8 +38,16 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   int get questionTypeIndex => _questionTypeIndex;
 
-  void selectCategory(int category) {
+  QuestionCategory get category => _category;
+
+  QuestionDifficulty get difficulty => _difficulty;
+
+  QuestionType get type => _type;
+
+  void selectCategory(int category,
+      {QuestionCategory questionCategory = QuestionCategory.ANY}) {
     _quizCategory = category;
+    _category = questionCategory;
     emit(QuizCategoryChosenState());
   }
 
@@ -42,13 +56,17 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     emit(ParameterUpdatedState());
   }
 
-  void changeDifficulty(int index) {
+  void changeDifficulty(int index,
+      {QuestionDifficulty questionDifficulty = QuestionDifficulty.ANY}) {
     _difficultyIndex = index;
+    _difficulty = questionDifficulty;
     emit(ParameterUpdatedState());
   }
 
-  void changeQuestionType(int index) {
+  void changeQuestionType(int index,
+      {QuestionType questionType = QuestionType.ANY}) {
     _questionTypeIndex = index;
+    _type = questionType;
     emit(ParameterUpdatedState());
   }
 

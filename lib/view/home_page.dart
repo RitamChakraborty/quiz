@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/service/quiz_service.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
-    List<String> categories = _quizService.categories;
+    List<QuestionCategory> categories = QuestionCategory.values;
 
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage>
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: Image.asset(
-                            "assets/images/${categories[index].toLowerCase()}.webp")
+                            "assets/images/${categories[index].title.toLowerCase()}.webp")
                         .image,
                   ),
                 ),
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage>
                         padding: const EdgeInsets.only(
                             left: 16.0, bottom: 12, right: 8),
                         child: Text(
-                          "${categories[index].toUpperCase()}",
+                          "${categories[index].title.toUpperCase()}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
