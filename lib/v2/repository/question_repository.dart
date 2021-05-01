@@ -12,10 +12,14 @@ class QuestionRepository {
     final http.Response response =
         await _client.get(Uri.parse(quizParameter.toString()));
     final String body = response.body;
-    final List<dynamic> json = jsonDecode(body);
+    final json = jsonDecode(body);
 
-    for (int i = 0; i < json.length; ++i) {
-      questions.add(Question.fromJson(json[i]));
+    if (json['response_code'] == 0) {
+      final results = json['results'];
+
+      for (int i = 0; i < results.length; ++i) {
+        questions.add(Question.fromJson(results[i]));
+      }
     }
 
     return questions;
