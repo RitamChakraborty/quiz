@@ -12,6 +12,7 @@ dependencies:
   http: ^0.13.0
   sleek_circular_slider: ^2.0.0
   flutter_bloc: ^7.0.0
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
