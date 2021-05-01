@@ -5,14 +5,16 @@ import 'package:quiz/v2/repository/question_repository.dart';
 
 class QuestionServiceProvider extends ChangeNotifier {
   QuestionRepository questionRepository = QuestionRepository();
-  List<Question> questions;
+  List<Question> _questions;
 
   QuestionServiceProvider() {
-    questions = null;
+    _questions = null;
   }
 
+  List<Question> get questions => _questions;
+
   void fetchQuestion(QuizParameter quizParameter) async {
-    questions = await questionRepository.getQuestions(quizParameter);
+    _questions = await questionRepository.getQuestions(quizParameter);
     notifyListeners();
   }
 }

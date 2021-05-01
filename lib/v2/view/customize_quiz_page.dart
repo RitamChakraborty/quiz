@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/v2/service/quiz_customizer_cubit.dart';
-import 'package:quiz/v2/service/quiz_page.dart';
+import 'package:quiz/v2/view/quiz_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CustomizeQuizPage extends StatelessWidget {
