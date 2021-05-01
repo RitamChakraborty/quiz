@@ -1,4 +1,7 @@
 import 'package:meta/meta.dart';
+import 'package:quiz/model/question_difficulty.dart';
+import 'package:quiz/model/question_type.dart';
+import 'package:quiz/model/quiz_category.dart';
 
 class QuizParameter {
   static const API = "https://opentdb.com/api.php";
@@ -14,6 +17,20 @@ class QuizParameter {
         this._difficulty = difficulty,
         this._type = type,
         assert(amount != null);
+
+  factory QuizParameter.fromEnums({
+    @required int amount,
+    QuestionCategory category,
+    QuestionDifficulty difficulty,
+    QuestionType type,
+  }) {
+    return QuizParameter(
+      amount: amount,
+      category: category == null ? null : category.value,
+      difficulty: difficulty == null ? null : difficulty.value,
+      type: type == null ? null : type.value,
+    );
+  }
 
   String get type => _type;
 
