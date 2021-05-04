@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
@@ -29,31 +30,39 @@ class QuizPage extends StatelessWidget {
           );
         }
 
-        for (int i = 0; i < questions.length;) {
-          return StatefulBuilder(builder: (context, setstate) {
-            return Material(
-              child: Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Text(questions[i].question),
-                      ElevatedButton(
-                        onPressed: () {
-                          setstate(() {
-                            ++i;
-                          });
-                        },
-                        child: Text("Next"),
-                      ),
-                    ],
+        int i = 0;
+
+        while (true) {
+          if (i == questions.length) {
+            break;
+          } else {
+            return StatefulBuilder(builder: (context, setstate) {
+              Question question = questions[i];
+
+              return Material(
+                child: Container(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(HtmlUnescape().convert(question.question)),
+                        ElevatedButton(
+                          onPressed: () {
+                            setstate(() {
+                              ++i;
+                            });
+                          },
+                          child: Text("Next"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          });
+              );
+            });
+          }
         }
 
-        return null;
+        return Container();
       },
     );
   }
