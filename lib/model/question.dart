@@ -17,6 +17,14 @@ class Question {
   final String correctAnswer;
   final List<String> incorrectAnswers;
 
+  /// All the options
+  List<String> get options {
+    List<String> options = incorrectAnswers + [correctAnswer];
+    options.shuffle();
+
+    return options;
+  }
+
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         category: json["category"],
         type: json["type"],

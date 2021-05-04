@@ -29,13 +29,31 @@ class QuizPage extends StatelessWidget {
           );
         }
 
-        return Material(
-          child: Container(
-            child: Center(
-              child: Text(_quizParameter.amount.toString()),
-            ),
-          ),
-        );
+        for (int i = 0; i < questions.length;) {
+          return StatefulBuilder(builder: (context, setstate) {
+            return Material(
+              child: Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(questions[i].question),
+                      ElevatedButton(
+                        onPressed: () {
+                          setstate(() {
+                            ++i;
+                          });
+                        },
+                        child: Text("Next"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        }
+
+        return null;
       },
     );
   }
