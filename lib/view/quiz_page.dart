@@ -38,6 +38,13 @@ class QuizPage extends StatelessWidget {
           } else {
             return StatefulBuilder(builder: (context, setstate) {
               Question question = questions[i];
+              List<Widget> options = question.options
+                  .map((option) => Container(
+                        child: Center(
+                          child: Text(option),
+                        ),
+                      ))
+                  .toList();
 
               return Material(
                 child: Container(
@@ -53,6 +60,9 @@ class QuizPage extends StatelessWidget {
                           },
                           child: Text("Next"),
                         ),
+                        Column(
+                          children: options,
+                        )
                       ],
                     ),
                   ),
