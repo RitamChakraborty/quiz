@@ -13,21 +13,44 @@ class QuestionContainer extends StatelessWidget {
       question: "This is a question for which no answer exists!",
     );
 
-    Widget questionContainer(String question) => Container(
-          child: Card(
-            elevation: 10,
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(question),
+    Widget questionContainer(String question) => Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Material(
+              elevation: 10,
+              color: Colors.deepPurple,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  question,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32.0,
+                  ),
+                ),
+              ),
             ),
           ),
         );
 
     Widget optionWidget(String option) => Container(
-          child: Card(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(option),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Material(
+            elevation: 10,
+            color: Colors.deepPurple,
+            child: MaterialButton(
+              onPressed: () {},
+              child: AnimatedContainer(
+                margin: const EdgeInsets.all(16),
+                alignment: Alignment.center,
+                duration: Duration(milliseconds: 400),
+                child: Text(
+                  option,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
           ),
         );
@@ -36,8 +59,11 @@ class QuestionContainer extends StatelessWidget {
         question.options.map((option) => optionWidget(option)).toList();
 
     return Material(
-      child: Column(
-        children: [questionContainer(question.question)] + optionWidgets,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [questionContainer(question.question)] + optionWidgets,
+        ),
       ),
     );
   }
