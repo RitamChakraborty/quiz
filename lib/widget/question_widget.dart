@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/model/question.dart';
 
-class QuestionContainer extends StatefulWidget {
+class QuestionWidget extends StatefulWidget {
+  final Question _question;
+
+  const QuestionWidget(this._question, {Key key}) : super(key: key);
+
   @override
-  _QuestionContainerState createState() => _QuestionContainerState();
+  _QuestionWidgetState createState() => _QuestionWidgetState();
 }
 
-class _QuestionContainerState extends State<QuestionContainer> {
+class _QuestionWidgetState extends State<QuestionWidget> {
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
   var color = Colors.purple;
   var colors = [];
-  final Question question = Question(
-    type: "any",
-    difficulty: "any",
-    category: "any",
-    correctAnswer: "correct",
-    incorrectAnswers: ["incorrect1", "incorrect2", "incorrect3"],
-    question: "This is a question for which no answer exists!",
-  );
   List<String> options = [];
   var correctAnswerIndex = 0;
   var answered = false;
@@ -26,11 +22,11 @@ class _QuestionContainerState extends State<QuestionContainer> {
   @override
   void initState() {
     super.initState();
-    options = question.options;
+    options = widget._question.options;
     for (int i = 0; i < options.length; ++i) {
       colors.add(color);
 
-      if (options[i] == question.correctAnswer) {
+      if (options[i] == widget._question.correctAnswer) {
         correctAnswerIndex = i;
       }
     }
@@ -95,16 +91,17 @@ class _QuestionContainerState extends State<QuestionContainer> {
 
     for (int i = 0; i < options.length; ++i) {
       String option = options[i];
-      var widget = option == question.correctAnswer
+      var temp = option == widget._question.correctAnswer
           ? optionWidget(i, option, isCorrect: true)
           : optionWidget(i, option);
-      optionWidgets.add(widget);
+      optionWidgets.add(temp);
     }
 
     return Material(
       child: Container(
         child: Column(
-          children: [questionContainer(question.question)] + optionWidgets,
+          children:
+              [questionContainer(widget._question.question)] + optionWidgets,
         ),
       ),
     );

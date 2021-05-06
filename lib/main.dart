@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
-import 'package:quiz/widget/question_container.dart';
+import 'package:quiz/view/home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         //   backgroundColor: Colors.grey[800],
         //   buttonColor: Colors.grey,
         // ),
-        home: QuestionContainer(),
+        home: HomePage(),
       ),
     );
   }
