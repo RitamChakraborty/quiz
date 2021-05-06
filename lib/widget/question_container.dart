@@ -40,7 +40,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
   Widget build(BuildContext context) {
     Widget questionContainer(String question) => Expanded(
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(bottom: 24),
             child: Material(
               elevation: 10,
               color: Colors.deepPurple,
@@ -60,7 +60,8 @@ class _QuestionContainerState extends State<QuestionContainer> {
 
     Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding:
+              EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
           child: Material(
             elevation: 10,
             color: colors[index],
@@ -82,6 +83,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
                   option,
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -101,7 +103,6 @@ class _QuestionContainerState extends State<QuestionContainer> {
 
     return Material(
       child: Container(
-        padding: const EdgeInsets.all(16),
         child: Column(
           children: [questionContainer(question.question)] + optionWidgets,
         ),
