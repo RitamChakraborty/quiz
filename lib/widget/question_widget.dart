@@ -11,11 +11,12 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
+  List<String> options = [];
+  List<Widget> optionWidgets = [];
+  var colors = [];
+  var color = Colors.purple;
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
-  var color = Colors.purple;
-  var colors = [];
-  List<String> options = [];
   var correctAnswerIndex = 0;
   var answered = false;
 
@@ -32,63 +33,60 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget questionContainer(String question) => Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 24),
-            child: Material(
-              elevation: 10,
-              color: Colors.deepPurple,
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  question,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
-    Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
-        Container(
-          padding:
-              EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
+  Widget questionContainer(String question) => Expanded(
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 24),
           child: Material(
             elevation: 10,
-            color: colors[index],
-            child: MaterialButton(
-              onPressed: answered
-                  ? null
-                  : () {
-                      setState(() {
-                        colors[index] = wrongColor;
-                        colors[correctAnswerIndex] = correctColor;
-                        answered = true;
-                      });
-                    },
-              child: AnimatedContainer(
-                margin: const EdgeInsets.all(16),
-                alignment: Alignment.center,
-                duration: Duration(milliseconds: 400),
-                child: Text(
-                  option,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
+            color: Colors.deepPurple,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                question,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 32.0,
                 ),
               ),
             ),
           ),
-        );
+        ),
+      );
 
-    List<Widget> optionWidgets = [];
+  Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
+      Container(
+        padding: EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
+        child: Material(
+          elevation: 10,
+          color: colors[index],
+          child: MaterialButton(
+            onPressed: answered
+                ? null
+                : () {
+                    setState(() {
+                      colors[index] = wrongColor;
+                      colors[correctAnswerIndex] = correctColor;
+                      answered = true;
+                    });
+                  },
+            child: AnimatedContainer(
+              margin: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              duration: Duration(milliseconds: 400),
+              child: Text(
+                option,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 
+  @override
+  Widget build(BuildContext context) {
     for (int i = 0; i < options.length; ++i) {
       String option = options[i];
       var temp = option == widget._question.correctAnswer
@@ -101,7 +99,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       child: Container(
         child: Column(
           children:
-              [questionContainer(widget._question.question)] + optionWidgets,
+          [questionContainer(widget._question.question)] + optionWidgets,
         ),
       ),
     );
