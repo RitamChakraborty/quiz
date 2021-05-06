@@ -21,6 +21,7 @@ class _QuestionContainerState extends State<QuestionContainer> {
   );
   List<String> options = [];
   var correctAnswerIndex = 0;
+  var answered = false;
 
   @override
   void initState() {
@@ -64,12 +65,15 @@ class _QuestionContainerState extends State<QuestionContainer> {
             elevation: 10,
             color: colors[index],
             child: MaterialButton(
-              onPressed: () {
-                setState(() {
-                  colors[index] = wrongColor;
-                  colors[correctAnswerIndex] = correctColor;
-                });
-              },
+              onPressed: answered
+                  ? null
+                  : () {
+                      setState(() {
+                        colors[index] = wrongColor;
+                        colors[correctAnswerIndex] = correctColor;
+                        answered = true;
+                      });
+                    },
               child: AnimatedContainer(
                 margin: const EdgeInsets.all(16),
                 alignment: Alignment.center,
