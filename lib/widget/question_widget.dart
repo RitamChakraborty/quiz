@@ -5,7 +5,10 @@ import 'package:quiz/model/question.dart';
 class QuestionWidget extends StatefulWidget {
   final Question _question;
 
-  const QuestionWidget(this._question, {Key key}) : super(key: key);
+  const QuestionWidget({@required Question quesiton, Key key})
+      : this._question = quesiton,
+        assert(quesiton != null),
+        super(key: key);
 
   @override
   _QuestionWidgetState createState() => _QuestionWidgetState();
