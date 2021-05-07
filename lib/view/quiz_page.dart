@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:html_unescape/html_unescape.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/service/question_service_provider.dart';
+import 'package:quiz/widget/question_widget.dart';
 
 class QuizPage extends StatelessWidget {
   static Route<dynamic> route(QuizParameter quizParameter) =>
@@ -38,20 +38,18 @@ class QuizPage extends StatelessWidget {
           } else {
             return StatefulBuilder(builder: (context, setstate) {
               Question question = questions[i];
-              List<Widget> options = question.options
-                  .map((option) => Container(
-                        child: Center(
-                          child: Text(option),
-                        ),
-                      ))
-                  .toList();
+              QuestionWidget questionWidget;
+
+              setstate(() {
+                questionWidget = QuestionWidget(question: question);
+              });
 
               return Material(
                 child: Container(
                   child: Center(
                     child: Column(
                       children: [
-                        Text(HtmlUnescape().convert(question.question)),
+                        Expanded(child: questionWidget),
                         ElevatedButton(
                           onPressed: () {
                             setstate(() {
@@ -60,9 +58,6 @@ class QuizPage extends StatelessWidget {
                           },
                           child: Text("Next"),
                         ),
-                        Column(
-                          children: options,
-                        )
                       ],
                     ),
                   ),

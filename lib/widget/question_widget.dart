@@ -5,9 +5,9 @@ import 'package:quiz/model/question.dart';
 class QuestionWidget extends StatefulWidget {
   final Question _question;
 
-  const QuestionWidget({@required Question quesiton, Key key})
-      : this._question = quesiton,
-        assert(quesiton != null),
+  const QuestionWidget({@required Question question, Key key})
+      : this._question = question,
+        assert(question != null),
         super(key: key);
 
   @override
@@ -15,19 +15,43 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  List<String> options = [];
-  List<Widget> optionWidgets = [];
-  var colors = [];
-  var color = Colors.purple;
+  List<String> options;
+  List<Widget> optionWidgets;
+  List<Color> colors;
+  final color = Colors.purple;
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
-  var correctAnswerIndex = 0;
-  var answered = false;
+  var correctAnswerIndex;
+  var answered;
 
   @override
   void initState() {
     super.initState();
+
     options = widget._question.options;
+    optionWidgets = [];
+    colors = [];
+    correctAnswerIndex = 0;
+    answered = false;
+
+    for (int i = 0; i < options.length; ++i) {
+      colors.add(color);
+
+      if (options[i] == widget._question.correctAnswer) {
+        correctAnswerIndex = i;
+      }
+    }
+  }
+
+  @override
+  void didUpdateWidget(QuestionWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    options = widget._question.options;
+    optionWidgets = [];
+    colors = [];
+    correctAnswerIndex = 0;
+    answered = false;
 
     for (int i = 0; i < options.length; ++i) {
       colors.add(color);
@@ -92,13 +116,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < options.length; ++i) {
+    optionWidgets = List.generate(options.length, (i) {
       String option = options[i];
-      var temp = option == widget._question.correctAnswer
+      return option == widget._question.correctAnswer
           ? optionWidget(i, option, isCorrect: true)
           : optionWidget(i, option);
-      optionWidgets.add(temp);
-    }
+    });
 
     return Material(
       child: Container(
