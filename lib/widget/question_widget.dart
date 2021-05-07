@@ -18,7 +18,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   List<String> options;
   List<Widget> optionWidgets;
   List<Color> colors;
-  final color = Colors.purple;
+  final color = Colors.deepPurple;
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
   var correctAnswerIndex;
@@ -65,16 +65,22 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Widget questionContainer(String question) => Expanded(
         child: Container(
           padding: const EdgeInsets.only(bottom: 24),
+          alignment: Alignment.center,
           child: Material(
+            color: Colors.purple,
             elevation: 10,
-            color: Colors.deepPurple,
             child: Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05),
               alignment: Alignment.center,
-              child: Text(
-                question,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32.0,
+              child: SingleChildScrollView(
+                child: Text(
+                  question,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                  ),
                 ),
               ),
             ),
@@ -102,11 +108,15 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               margin: const EdgeInsets.all(16),
               alignment: Alignment.center,
               duration: Duration(milliseconds: 400),
-              child: Text(
-                option,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  option,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
@@ -117,7 +127,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
     optionWidgets = List.generate(options.length, (i) {
-      String option = options[i];
+      String option = HtmlUnescape().convert(options[i]);
       return option == widget._question.correctAnswer
           ? optionWidget(i, option, isCorrect: true)
           : optionWidget(i, option);
