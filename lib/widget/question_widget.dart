@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:quiz/model/question.dart';
 
 class QuestionWidget extends StatefulWidget {
@@ -24,6 +25,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   void initState() {
     super.initState();
     options = widget._question.options;
+
     for (int i = 0; i < options.length; ++i) {
       colors.add(color);
 
@@ -98,8 +100,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     return Material(
       child: Container(
         child: Column(
-          children:
-          [questionContainer(widget._question.question)] + optionWidgets,
+          children: [
+                questionContainer(
+                    HtmlUnescape().convert(widget._question.question))
+              ] +
+              optionWidgets,
         ),
       ),
     );
