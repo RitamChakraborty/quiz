@@ -21,6 +21,7 @@ class QuizPage extends StatelessWidget {
         QuestionServiceProvider questionService =
             Provider.of<QuestionServiceProvider>(context);
         List<Question> questions = questionService.questions;
+        int i = questionService.index;
 
         if (questions == null) {
           questionService.fetchQuestion(_quizParameter);
@@ -29,41 +30,28 @@ class QuizPage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return StatefulBuilder(
-            builder: (context, setstate) {
-              int i = 0;
+          if (i == questions.length) {
+            // Todo: Redirect to result page
+            return Text("Done");
+          }
 
-              while (i < questions.length) {
-                Question question = questions[i];
-                QuestionWidget questionWidget;
+          Question question = questions[i];
+          final questionWidget = QuestionWidget(question: question);
 
-                setstate(() {
-                  questionWidget = QuestionWidget(question: question);
-                });
-
-                return Material(
-                  child: Container(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Expanded(child: questionWidget),
-                          ElevatedButton(
-                            onPressed: () {
-                              setstate(() {
-                                ++i;
-                              });
-                            },
-                            child: Text("Next"),
-                          ),
-                        ],
-                      ),
+          return Material(
+            child: Container(
+              child: Center(
+                child: Column(
+                  children: [
+                    Expanded(child: questionWidget),
+                    ElevatedButton(
+                      onPressed: questionService.nextQuestion,
+                      child: Text("Next"),
                     ),
-                  ),
-                );
-              }
-
-              return Container();
-            },
+                  ],
+                ),
+              ),
+            ),
           );
         }
       },
