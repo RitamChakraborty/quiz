@@ -20,23 +20,21 @@ class QuizPage extends StatelessWidget {
       builder: (context, child) {
         QuestionServiceProvider questionService =
             Provider.of<QuestionServiceProvider>(context);
-        List<Question> questions = questionService.questions;
-        int i = questionService.index;
+        bool loading = questionService.loading;
+        bool completed = questionService.completed;
 
-        if (questions == null) {
+        if (completed) {
+          // Todo: Navigate to result page
+
+          return Text("Done");
+        }
+
+        if (loading) {
           questionService.fetchQuestion(_quizParameter);
-
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Center(child: CircularProgressIndicator());
         } else {
-          if (i == questions.length) {
-            // Todo: Redirect to result page
-            return Text("Done");
-          }
-
-          Question question = questions[i];
-          final questionWidget = QuestionWidget(question: question);
+          Question question = questionService.question;
+          QuestionWidget questionWidget = QuestionWidget(question: question);
 
           return Material(
             child: Container(
