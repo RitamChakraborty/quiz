@@ -104,7 +104,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             onPressed: answered
                 ? null
                 : () {
-              setState(() {
+                    setState(() {
                       colors[index] = wrongColor;
                       colors[correctAnswerIndex] = correctColor;
                       answered = true;
