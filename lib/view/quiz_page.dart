@@ -36,17 +36,19 @@ class QuizPage extends StatelessWidget {
           Question question = questionService.question;
           QuestionWidget questionWidget = QuestionWidget(question: question);
 
-          return Material(
-            child: Container(
-              child: Center(
-                child: Column(
-                  children: [
-                    Expanded(child: questionWidget),
-                    ElevatedButton(
-                      onPressed: questionService.nextQuestion,
-                      child: Text("Next"),
-                    ),
-                  ],
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: questionService.nextQuestion,
+              child: Icon(Icons.navigate_next),
+            ),
+            body: Material(
+              child: Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Expanded(child: questionWidget),
+                    ],
+                  ),
                 ),
               ),
             ),
