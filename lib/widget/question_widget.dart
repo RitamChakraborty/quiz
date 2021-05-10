@@ -4,10 +4,16 @@ import 'package:quiz/model/question.dart';
 
 class QuestionWidget extends StatefulWidget {
   final Question _question;
+  final ValueChanged<bool> _answer;
 
-  const QuestionWidget({@required Question question, Key key})
+  const QuestionWidget(
+      {@required Question question,
+      @required ValueChanged<bool> answer,
+      Key key})
       : this._question = question,
+        this._answer = answer,
         assert(question != null),
+        assert(answer != null),
         super(key: key);
 
   @override
@@ -98,11 +104,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             onPressed: answered
                 ? null
                 : () {
-                    setState(() {
+              setState(() {
                       colors[index] = wrongColor;
                       colors[correctAnswerIndex] = correctColor;
                       answered = true;
                     });
+
+                    widget._answer(index == correctAnswerIndex);
                   },
             child: AnimatedContainer(
               margin: const EdgeInsets.all(16),

@@ -34,7 +34,12 @@ class QuizPage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else {
           Question question = questionService.question;
-          QuestionWidget questionWidget = QuestionWidget(question: question);
+          QuestionWidget questionWidget = QuestionWidget(
+            question: question,
+            answer: (value) {
+              print(value);
+            },
+          );
 
           return Scaffold(
             floatingActionButton: FloatingActionButton(
