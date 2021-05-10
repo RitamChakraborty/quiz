@@ -28,46 +28,44 @@ class QuizPage extends StatelessWidget {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }
+        } else {
+          return StatefulBuilder(
+            builder: (context, setstate) {
+              int i = 0;
 
-        int i = 0;
+              while (i < questions.length) {
+                Question question = questions[i];
+                QuestionWidget questionWidget;
 
-        while (true) {
-          if (i == questions.length) {
-            break;
-          } else {
-            return StatefulBuilder(builder: (context, setstate) {
-              Question question = questions[i];
-              QuestionWidget questionWidget;
+                setstate(() {
+                  questionWidget = QuestionWidget(question: question);
+                });
 
-              setstate(() {
-                questionWidget = QuestionWidget(question: question);
-              });
-
-              return Material(
-                child: Container(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Expanded(child: questionWidget),
-                        ElevatedButton(
-                          onPressed: () {
-                            setstate(() {
-                              ++i;
-                            });
-                          },
-                          child: Text("Next"),
-                        ),
-                      ],
+                return Material(
+                  child: Container(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Expanded(child: questionWidget),
+                          ElevatedButton(
+                            onPressed: () {
+                              setstate(() {
+                                ++i;
+                              });
+                            },
+                            child: Text("Next"),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            });
-          }
-        }
+                );
+              }
 
-        return Container();
+              return Container();
+            },
+          );
+        }
       },
     );
   }
