@@ -13,6 +13,7 @@ class CustomizeQuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
+    final size = MediaQuery.of(context).size;
 
     /// Change question count
     void changeQuestionCount(double value) {
@@ -64,7 +65,7 @@ class CustomizeQuizPage extends StatelessWidget {
                   child: Text(
                     "${quizCustomizer.questionCount}",
                     style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.1,
+                      fontSize: size.width * 0.1,
                     ),
                   ),
                 ),
@@ -89,30 +90,32 @@ class CustomizeQuizPage extends StatelessWidget {
       spreadRadius: 3,
     );
 
-    final selectedMargin = const EdgeInsets.all(4.0);
+    final selectedMargin = const EdgeInsets.all(8.0);
 
-    final unselectedMargin = const EdgeInsets.all(8.0);
+    final unselectedMargin = const EdgeInsets.all(16.0);
 
     Widget difficultyButton(int index, String difficulty) {
       return Expanded(
         child: GestureDetector(
           onTap: () => changeDifficulty(index),
-          child: AnimatedContainer(
-            margin: index == quizCustomizer.difficultyIndex
-                ? selectedMargin
-                : unselectedMargin,
-            duration: Duration(milliseconds: 400),
-            height: double.infinity,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.green,
-              boxShadow: [
-                index == quizCustomizer.difficultyIndex
-                    ? selectedBoxShadow
-                    : unselectedBoxShadow
-              ],
+          child: AspectRatio(
+            aspectRatio: 1.0,
+            child: AnimatedContainer(
+              margin: index == quizCustomizer.difficultyIndex
+                  ? selectedMargin
+                  : unselectedMargin,
+              duration: Duration(milliseconds: 400),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                boxShadow: [
+                  index == quizCustomizer.difficultyIndex
+                      ? selectedBoxShadow
+                      : unselectedBoxShadow
+                ],
+              ),
+              child: Text(difficulty),
             ),
-            child: Text(difficulty),
           ),
         ),
       );
@@ -120,17 +123,15 @@ class CustomizeQuizPage extends StatelessWidget {
 
     Widget questionDifficultyContainer() {
       return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-          child: Flex(
-            direction: Axis.horizontal,
-            children: [
-              difficultyButton(0, "Easy"),
-              difficultyButton(1, "Medium"),
-              difficultyButton(2, "Hard"),
-              difficultyButton(3, "Mixed"),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            difficultyButton(0, "Easy"),
+            difficultyButton(1, "Medium"),
+            difficultyButton(2, "Hard"),
+            difficultyButton(3, "Mixed"),
+          ],
         ),
       );
     }
