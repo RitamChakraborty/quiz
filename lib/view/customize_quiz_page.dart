@@ -13,7 +13,6 @@ class CustomizeQuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
-    final size = MediaQuery.of(context).size;
 
     /// Change question count
     void changeQuestionCount(double value) {
@@ -39,38 +38,24 @@ class CustomizeQuizPage extends StatelessWidget {
     Widget countCounter() {
       return Expanded(
         child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SleekCircularSlider(
-                    appearance: CircularSliderAppearance(),
-                    initialValue: 10.0,
-                    min: 1,
-                    max: 50,
-                    onChange: changeQuestionCount,
-                    innerWidget: (value) {
-                      return Container();
-                    },
-                  ),
+          alignment: Alignment.bottomCenter,
+          padding: const EdgeInsets.all(16),
+          child: SleekCircularSlider(
+            appearance: CircularSliderAppearance(),
+            initialValue: 10.0,
+            min: 1,
+            max: 50,
+            onChange: changeQuestionCount,
+            innerWidget: (value) {
+              return Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                child: Text(
+                  "${quizCustomizer.questionCount}",
+                  style: TextStyle(fontSize: 48),
                 ),
-              ),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "${quizCustomizer.questionCount}",
-                    style: TextStyle(
-                      fontSize: size.width * 0.1,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       );
@@ -139,8 +124,10 @@ class CustomizeQuizPage extends StatelessWidget {
     Widget questionTypeContainer() {
       return Expanded(
         child: Container(
-          color: Colors.blue,
+          alignment: Alignment.topCenter,
+          padding: const EdgeInsets.all(16),
           child: CupertinoSlidingSegmentedControl(
+            groupValue: quizCustomizer.questionTypeIndex,
             children: {
               0: Text("MCQ"),
               1: Text("True-False"),
