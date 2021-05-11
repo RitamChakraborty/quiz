@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -121,19 +122,32 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
+    Widget segmentedSliderChild(String value) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          "$value",
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    }
+
     Widget questionTypeContainer() {
       return Expanded(
         child: Container(
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.all(16),
-          child: CupertinoSlidingSegmentedControl(
-            groupValue: quizCustomizer.questionTypeIndex,
+          child: MaterialSegmentedControl(
+            selectionIndex: quizCustomizer.questionTypeIndex,
+            borderColor: Colors.grey,
+            selectedColor: Colors.purple,
+            unselectedColor: Colors.grey.shade300,
             children: {
-              0: Text("MCQ"),
-              1: Text("True-False"),
-              2: Text("Either"),
+              0: segmentedSliderChild("MCQ"),
+              1: segmentedSliderChild("True-False"),
+              2: segmentedSliderChild("Either"),
             },
-            onValueChanged: changeQuestionType,
+            onSegmentChosen: changeQuestionType,
           ),
         ),
       );
