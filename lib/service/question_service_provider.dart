@@ -25,6 +25,8 @@ class QuestionServiceProvider extends ChangeNotifier {
 
   int get index => _index;
 
+  int get count => _questions.length;
+
   int get score => _score;
 
   bool get loading => _loading;

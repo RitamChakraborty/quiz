@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/service/question_service_provider.dart';
+import 'package:quiz/view/score_page.dart';
 import 'package:quiz/widget/question_widget.dart';
 
 class QuizPage extends StatelessWidget {
@@ -24,7 +25,15 @@ class QuizPage extends StatelessWidget {
         bool completed = questionService.completed;
 
         if (completed) {
-          return Text("${questionService.score}");
+          WidgetsFlutterBinding.ensureInitialized()
+              .addPostFrameCallback((timeStamp) {
+            Navigator.of(context).push(ScorePage.route(
+              score: questionService.score,
+              count: questionService.count,
+            ));
+          });
+
+          return Container();
         }
 
         if (loading) {
