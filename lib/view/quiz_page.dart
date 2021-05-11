@@ -24,9 +24,7 @@ class QuizPage extends StatelessWidget {
         bool completed = questionService.completed;
 
         if (completed) {
-          // Todo: Navigate to result page
-
-          return Text("Done");
+          return Text("${questionService.score}");
         }
 
         if (loading) {
@@ -36,9 +34,7 @@ class QuizPage extends StatelessWidget {
           Question question = questionService.question;
           QuestionWidget questionWidget = QuestionWidget(
             question: question,
-            answer: (value) {
-              print(value);
-            },
+            answer: questionService.answer,
           );
 
           return Scaffold(

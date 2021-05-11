@@ -7,6 +7,7 @@ class QuestionServiceProvider extends ChangeNotifier {
   QuestionRepository questionRepository = QuestionRepository();
   List<Question> _questions;
   int _index = 0;
+  int _score = 0;
   bool _loading = true;
   bool _completed = false;
 
@@ -24,6 +25,8 @@ class QuestionServiceProvider extends ChangeNotifier {
 
   int get index => _index;
 
+  int get score => _score;
+
   bool get loading => _loading;
 
   bool get completed => _completed;
@@ -36,6 +39,12 @@ class QuestionServiceProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  void answer(bool value) {
+    if (value) {
+      ++_score;
+    }
   }
 
   void fetchQuestion(QuizParameter quizParameter) async {
