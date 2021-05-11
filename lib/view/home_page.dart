@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
-import 'package:quiz/service/quiz_service.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
 import 'package:quiz/widget/feeling_lucky_button.dart';
 
@@ -15,8 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final QuizService _quizService = QuizService();
-
   final ScrollController _scrollController = ScrollController();
 
   AnimationController _animationController;
@@ -59,7 +56,9 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
-    List<QuestionCategory> categories = QuestionCategory.values;
+    List<QuestionCategory> categories = QuestionCategory.values
+        .where((category) => category != QuestionCategory.ANY)
+        .toList();
 
     /// Returns the MaxCrossAxisExtend value according to the orientation
     double getMaxCrossAxisExtend() {
