@@ -38,30 +38,35 @@ class CustomizeQuizPage extends StatelessWidget {
     Widget countCounter() {
       return Expanded(
         child: Container(
-          color: Colors.red,
-          child: Flex(
-            direction: Axis.horizontal,
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Flexible(
-                flex: 1,
-                child: SleekCircularSlider(
-                  appearance: CircularSliderAppearance(),
-                  initialValue: 10.0,
-                  min: 1,
-                  max: 50,
-                  onChange: changeQuestionCount,
-                  innerWidget: (value) {
-                    return Container();
-                  },
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SleekCircularSlider(
+                    appearance: CircularSliderAppearance(),
+                    initialValue: 10.0,
+                    min: 1,
+                    max: 50,
+                    onChange: changeQuestionCount,
+                    innerWidget: (value) {
+                      return Container();
+                    },
+                  ),
                 ),
               ),
-              Flexible(
-                flex: 1,
+              Expanded(
                 child: Container(
+                  padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.all(16),
-                  child: Text("${quizCustomizer.questionCount}"),
+                  child: Text(
+                    "${quizCustomizer.questionCount}",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                  ),
                 ),
               ),
             ],
