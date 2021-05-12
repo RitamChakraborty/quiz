@@ -8,6 +8,8 @@ import 'package:quiz/view/customize_quiz_page.dart';
 import 'package:quiz/widget/feeling_lucky_button.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = "/";
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage>
       bloc: quizCustomizer,
       listener: (context, state) {
         if (state.runtimeType == QuizCategoryChosenState) {
-          Navigator.of(context).push(CustomizeQuizPage.router());
+          Navigator.of(context).pushNamed(CustomizeQuizPage.routeName);
         }
       },
       builder: (context, state) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz/model/Result.dart';
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/service/question_service_provider.dart';
@@ -7,15 +8,13 @@ import 'package:quiz/view/score_page.dart';
 import 'package:quiz/widget/question_widget.dart';
 
 class QuizPage extends StatelessWidget {
-  static Route<dynamic> route(QuizParameter quizParameter) =>
-      MaterialPageRoute(builder: (_) => QuizPage(quizParameter));
-
-  final QuizParameter _quizParameter;
-
-  const QuizPage(this._quizParameter);
+  static const routeName = "/quizPage";
 
   @override
   Widget build(BuildContext context) {
+    final QuizParameter quizParameter =
+        ModalRoute.of(context).settings.arguments as QuizParameter;
+
     return ChangeNotifierProvider<QuestionServiceProvider>(
       create: (_) => QuestionServiceProvider(),
       builder: (context, child) {
@@ -27,17 +26,18 @@ class QuizPage extends StatelessWidget {
         if (completed) {
           WidgetsFlutterBinding.ensureInitialized()
               .addPostFrameCallback((timeStamp) {
-            Navigator.of(context).push(ScorePage.route(
-              score: questionService.score,
-              count: questionService.count,
-            ));
+            Navigator.of(context).pushNamed(ScorePage.routeName,
+                arguments: Result(
+                  marksObtained: questionService.count,
+                  totalMarks: questionService.count,
+                ));
           });
 
           return Container();
         }
 
         if (loading) {
-          questionService.fetchQuestion(_quizParameter);
+          questionService.fetchQuestion(quizParameter);
           return Center(child: CircularProgressIndicator());
         } else {
           Question question = questionService.question;

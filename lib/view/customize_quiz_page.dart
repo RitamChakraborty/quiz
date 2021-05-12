@@ -7,8 +7,7 @@ import 'package:quiz/view/quiz_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CustomizeQuizPage extends StatelessWidget {
-  static Route<dynamic> router() =>
-      MaterialPageRoute(builder: (_) => CustomizeQuizPage());
+  static const routeName = "/customizeQuizPage";
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +168,10 @@ class CustomizeQuizPage extends StatelessWidget {
       bloc: quizCustomizer,
       listener: (context, state) {
         if (state.runtimeType == StartQuizState) {
-          Navigator.of(context)
-              .push(QuizPage.route(quizCustomizer.quizParameter));
+          Navigator.of(context).pushNamed(
+            QuizPage.routeName,
+            arguments: quizCustomizer.quizParameter,
+          );
         }
       },
       builder: (context, state) {

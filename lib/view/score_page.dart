@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:quiz/model/Result.dart';
 
 class ScorePage extends StatelessWidget {
-  static Route<dynamic> route(
-          {@required int score, @required int count, Key key}) =>
-      MaterialPageRoute(builder: (_) => ScorePage(score: score, count: count));
-
-  final int _score;
-  final int _count;
-
-  const ScorePage({@required int score, @required int count, Key key})
-      : this._score = score,
-        this._count = count,
-        assert(score != null),
-        assert(count != null),
-        super(key: key);
+  static const routeName = "/scorePage";
 
   @override
   Widget build(BuildContext context) {
+    final Result result = ModalRoute.of(context).settings.arguments as Result;
+
     return Material(
       child: Container(
         child: Center(
-          child: Text("$_score/$_count"),
+          child: Text("${result.marksObtained}/${result.totalMarks}"),
         ),
       ),
     );
