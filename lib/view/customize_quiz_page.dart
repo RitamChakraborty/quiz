@@ -42,7 +42,7 @@ class CustomizeQuizPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: SleekCircularSlider(
             appearance: CircularSliderAppearance(),
-            initialValue: 10.0,
+            initialValue: quizCustomizer.questionCount as double,
             min: 1,
             max: 50,
             onChange: changeQuestionCount,

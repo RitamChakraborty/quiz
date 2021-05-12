@@ -23,7 +23,7 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   int _quizCategory = 0;
   int _questionCount = 10;
   int _difficultyIndex = 3;
-  int _questionTypeIndex = 0;
+  int _questionTypeIndex = 2;
   QuestionCategory _category = QuestionCategory.ANY;
   QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
   QuestionType _type = QuestionType.ANY;
