@@ -6,13 +6,17 @@ import 'package:quiz/repository/question_repository.dart';
 class QuestionServiceProvider extends ChangeNotifier {
   QuestionRepository questionRepository = QuestionRepository();
   List<Question> _questions;
-  int _index = 0;
-  int _score = 0;
-  bool _loading = true;
-  bool _completed = false;
+  int _index;
+  int _score;
+  bool _loading;
+  bool _completed;
 
   QuestionServiceProvider() {
     _questions = null;
+    _index = 0;
+    _score = 0;
+    _loading = true;
+    _completed = false;
   }
 
   Question get question {
@@ -44,6 +48,7 @@ class QuestionServiceProvider extends ChangeNotifier {
   }
 
   void answer(bool value) {
+    print(value);
     if (value) {
       ++_score;
     }

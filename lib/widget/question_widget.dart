@@ -110,7 +110,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                       answered = true;
                     });
 
-                    widget._answer(index == correctAnswerIndex);
+                    widget._answer(answered && index == correctAnswerIndex);
                   },
             child: AnimatedContainer(
               margin: const EdgeInsets.all(16),

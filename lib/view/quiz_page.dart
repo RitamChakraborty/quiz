@@ -28,7 +28,7 @@ class QuizPage extends StatelessWidget {
               .addPostFrameCallback((timeStamp) {
             Navigator.of(context).pushNamed(ScorePage.routeName,
                 arguments: Result(
-                  marksObtained: questionService.count,
+                  marksObtained: questionService.score,
                   totalMarks: questionService.count,
                 ));
           });
