@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz/model/Result.dart';
 import 'package:quiz/model/question.dart';
 import 'package:quiz/model/question_parameter.dart';
+import 'package:quiz/model/result.dart';
 import 'package:quiz/service/question_service_provider.dart';
 import 'package:quiz/view/score_page.dart';
 import 'package:quiz/widget/question_widget.dart';

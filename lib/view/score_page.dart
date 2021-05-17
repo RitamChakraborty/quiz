@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/model/Result.dart';
+import 'package:quiz/model/result.dart';
 import 'package:quiz/view/home_page.dart';
 
 class ScorePage extends StatelessWidget {
