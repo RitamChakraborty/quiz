@@ -10,6 +10,30 @@ import 'package:quiz/widget/question_widget.dart';
 class QuizPage extends StatelessWidget {
   static const routeName = "/quizPage";
 
+  Widget questionCounter({
+    @required int totalCount,
+    @required int currentIndex,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Row(
+        children: List<Widget>.generate(
+          totalCount,
+          (index) {
+            Color color = index == currentIndex ? Colors.purple : Colors.grey;
+
+            return Expanded(
+              child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 2),
+                  height: 4,
+                  color: color),
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final QuizParameter quizParameter =
@@ -58,14 +82,15 @@ class QuizPage extends StatelessWidget {
               onPressed: questionService.nextQuestion,
               child: Icon(Icons.navigate_next),
             ),
-            body: Material(
-              child: Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      Expanded(child: questionWidget),
-                    ],
-                  ),
+            body: SafeArea(
+              child: Material(
+                child: Column(
+                  children: [
+                    questionCounter(currentIndex: 3, totalCount: 10),
+                    Expanded(
+                      child: questionWidget,
+                    ),
+                  ],
                 ),
               ),
             ),
