@@ -4,7 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Clock extends StatefulWidget {
-  const Clock({Key key}) : super(key: key);
+  final VoidCallback onTimerEnd;
+
+  const Clock({@required this.onTimerEnd, Key key}) : super(key: key);
 
   @override
   _ClockState createState() => _ClockState();
@@ -51,6 +53,10 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     if (rotation == 200.0) {
       timer.cancel();
+      WidgetsFlutterBinding.ensureInitialized()
+          .addPostFrameCallback((timeStamp) {
+        widget.onTimerEnd();
+      });
     }
 
     return GestureDetector(

@@ -75,7 +75,10 @@ class QuizPage extends StatelessWidget {
                   .popUntil((route) => route.settings.name == '/');
             },
           ),
-          Clock(),
+          Clock(
+            onTimerEnd:
+                Provider.of<QuestionServiceProvider>(context).nextQuestion,
+          ),
           MaterialButton(
             color: Colors.grey,
             child: Row(
