@@ -52,6 +52,44 @@ class QuizPage extends StatelessWidget {
     );
   }
 
+  Widget buttons(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          MaterialButton(
+            color: Colors.redAccent,
+            child: Row(
+              children: [
+                Icon(Icons.power_settings_new),
+                SizedBox(width: 8),
+                Text("Quit"),
+              ],
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .popUntil((route) => route.settings.name == '/');
+            },
+          ),
+          MaterialButton(
+            color: Colors.grey,
+            child: Row(
+              children: [
+                Text("Next"),
+                SizedBox(width: 8),
+                Icon(Icons.navigate_next),
+              ],
+            ),
+            onPressed:
+                Provider.of<QuestionServiceProvider>(context).nextQuestion,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final QuizParameter quizParameter =
@@ -98,10 +136,6 @@ class QuizPage extends StatelessWidget {
           );
 
           return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: questionService.nextQuestion,
-              child: Icon(Icons.navigate_next),
-            ),
             body: SafeArea(
               child: Material(
                 color: Colors.deepPurple,
@@ -114,6 +148,7 @@ class QuizPage extends StatelessWidget {
                     Expanded(
                       child: questionWidget,
                     ),
+                    buttons(context),
                   ],
                 ),
               ),
