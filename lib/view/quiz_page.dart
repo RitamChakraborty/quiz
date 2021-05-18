@@ -5,8 +5,8 @@ import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/model/result.dart';
 import 'package:quiz/service/question_service_provider.dart';
 import 'package:quiz/view/score_page.dart';
+import 'package:quiz/widget/clock.dart';
 import 'package:quiz/widget/question_widget.dart';
-import 'package:quiz/widget/timer.dart';
 
 class QuizPage extends StatelessWidget {
   static const routeName = "/quizPage";
