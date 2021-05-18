@@ -44,6 +44,8 @@ class QuizPage extends StatelessWidget {
       builder: (context, child) {
         QuestionServiceProvider questionService =
             Provider.of<QuestionServiceProvider>(context);
+        int index = questionService.index;
+        int count = questionService.count;
         bool loading = questionService.loading;
         bool completed = questionService.completed;
 
@@ -86,7 +88,10 @@ class QuizPage extends StatelessWidget {
               child: Material(
                 child: Column(
                   children: [
-                    questionCounter(currentIndex: 3, totalCount: 10),
+                    questionCounter(
+                      currentIndex: index,
+                      totalCount: count,
+                    ),
                     Expanded(
                       child: questionWidget,
                     ),
