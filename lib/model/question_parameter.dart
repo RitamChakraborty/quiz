@@ -40,6 +40,15 @@ class QuizParameter {
 
   int get amount => _amount;
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['amount'] = this._amount;
+    data['category'] = this._category;
+    data['difficulty'] = this._difficulty;
+    data['type'] = this._type;
+    return data;
+  }
+
   @override
   String toString() {
     return API +

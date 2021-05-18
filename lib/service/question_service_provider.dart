@@ -57,6 +57,9 @@ class QuestionServiceProvider extends ChangeNotifier {
   void fetchQuestion(QuizParameter quizParameter) async {
     _questions = await questionRepository.getQuestions(quizParameter);
     _loading = false;
+
+    // _questions.forEach((question) => print(question.toJson()));
+
     notifyListeners();
   }
 }

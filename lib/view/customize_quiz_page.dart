@@ -14,27 +14,22 @@ class CustomizeQuizPage extends StatelessWidget {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
 
-    /// Change question count
     void changeQuestionCount(double value) {
       quizCustomizer.changeQuestionCount(value.toInt());
     }
 
-    /// Change the difficulty of the questions
     void changeDifficulty(int index) {
       quizCustomizer.changeDifficulty(index);
     }
 
-    /// Change question type
     void changeQuestionType(dynamic value) {
       quizCustomizer.changeQuestionType(value as int);
     }
 
-    /// Start the quiz by navigating to the quiz page
     void startQuiz() {
       quizCustomizer.startQuiz();
     }
 
-    // Widgets
     Widget countCounter() {
       return Expanded(
         child: Container(
@@ -42,7 +37,7 @@ class CustomizeQuizPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: SleekCircularSlider(
             appearance: CircularSliderAppearance(),
-            initialValue: quizCustomizer.questionCount as double,
+            initialValue: quizCustomizer.questionCount.toDouble(),
             min: 1,
             max: 50,
             onChange: changeQuestionCount,

@@ -17,9 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-
   AnimationController _animationController;
-
   bool _show = true;
 
   /// Listen to scroll direction
@@ -74,12 +72,10 @@ class _HomePageState extends State<HomePage>
       }
     }
 
-    /// I'm Feeling Lucky button action
     final VoidCallback feelingLuckyButtonOnPressed = () {
       quizCustomizer.selectCategory(0);
     };
 
-    // Widgets
     Widget categoryTile({@required int index}) => InkWell(
           onTap: () {
             quizCustomizer.selectCategory(index);
