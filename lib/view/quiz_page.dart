@@ -24,21 +24,28 @@ class QuizPage extends StatelessWidget {
         bool completed = questionService.completed;
 
         if (completed) {
-          WidgetsFlutterBinding.ensureInitialized()
-              .addPostFrameCallback((timeStamp) {
-            Navigator.of(context).pushNamed(ScorePage.routeName,
+          WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+            (timeStamp) {
+              Navigator.of(context).pushNamed(
+                ScorePage.routeName,
                 arguments: Result(
                   marksObtained: questionService.score,
                   totalMarks: questionService.count,
-                ));
-          });
+                ),
+              );
+            },
+          );
 
           return Container();
         }
 
         if (loading) {
           questionService.fetchQuestion(quizParameter);
-          return Center(child: CircularProgressIndicator());
+          return Material(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         } else {
           Question question = questionService.question;
           QuestionWidget questionWidget = QuestionWidget(
