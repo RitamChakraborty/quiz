@@ -59,6 +59,7 @@ class QuizPage extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MaterialButton(
             color: Colors.redAccent,

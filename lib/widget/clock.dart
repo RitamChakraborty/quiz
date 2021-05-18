@@ -55,30 +55,41 @@ class _ClockState extends State<Clock> {
 
     return GestureDetector(
       child: Container(
-        height: 30,
-        width: 30,
-        alignment: Alignment.topCenter,
+        padding: const EdgeInsets.all(2),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.green,
+          color: Colors.white,
         ),
-        child: Transform.rotate(
-          angle: pi * rotation / 100.0,
-          // origin: Offset(15, 13),
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              Container(
-                height: 15,
-                width: 4,
-                color: Colors.white,
-              ),
-              Container(
-                height: 15,
-                width: 4,
-                color: Colors.red,
-              ),
-            ],
+        child: Container(
+          height: 30,
+          width: 30,
+          alignment: Alignment.topCenter,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.purple,
+          ),
+          child: Transform.rotate(
+            angle: pi * rotation / 100.0,
+            // origin: Offset(15, 13),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                Container(
+                  height: 15,
+                  width: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                Container(
+                  height: 15,
+                  width: 4,
+                  color: Colors.transparent,
+                ),
+              ],
+            ),
           ),
         ),
       ),
