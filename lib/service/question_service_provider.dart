@@ -29,7 +29,7 @@ class QuestionServiceProvider extends ChangeNotifier {
 
   int get index => _index;
 
-  int get count => _questions.length;
+  int get count => _questions == null ? 0 : _questions.length;
 
   int get score => _score;
 
