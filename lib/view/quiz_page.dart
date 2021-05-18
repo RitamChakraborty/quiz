@@ -15,21 +15,39 @@ class QuizPage extends StatelessWidget {
     @required int currentIndex,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
-        children: List<Widget>.generate(
-          totalCount,
-          (index) {
-            Color color = index == currentIndex ? Colors.purple : Colors.grey;
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Question ${currentIndex + 1}/$totalCount",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+            ),
+            child: Row(
+              children: List<Widget>.generate(
+                totalCount,
+                (index) {
+                  Color color =
+                      index == currentIndex ? Colors.amber : Colors.grey;
 
-            return Expanded(
-              child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  height: 4,
-                  color: color),
-            );
-          },
-        ).toList(),
+                  return Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        height: 4,
+                        color: color),
+                  );
+                },
+              ).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -86,6 +104,7 @@ class QuizPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: Material(
+                color: Colors.deepPurple,
                 child: Column(
                   children: [
                     questionCounter(

@@ -141,15 +141,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           : optionWidget(i, option);
     });
 
-    return Material(
-      child: Container(
-        child: Column(
-          children: [
-                questionContainer(
-                    HtmlUnescape().convert(widget._question.question))
-              ] +
-              optionWidgets,
-        ),
+    return Container(
+      child: Column(
+        children: [
+              questionContainer(
+                  HtmlUnescape().convert(widget._question.question))
+            ] +
+            optionWidgets,
       ),
     );
   }
