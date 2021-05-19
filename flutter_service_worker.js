@@ -32,7 +32,7 @@ const RESOURCES = {
 "assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
 "assets/NOTICES": "2f57442d389dd88a1734933ff2babac0",
-"main.dart.js": "c9014d237599995b1181fdf157862993",
+"main.dart.js": "35fecbcd587790482c9a1b1eb5c33a67",
 "version.json": "b93d48b87f3bd6fed6a5c2a294e18ab4",
 "icons/apple-icon-114x114.png": "492e6654750d250d5bb800106a24029a",
 "icons/android-icon-48x48.png": "0e7e59d673482c3d64f90caa392b4d49",
@@ -62,8 +62,8 @@ const RESOURCES = {
 "icons/favicon-96x96.png": "1171f96171a32e43fa1dc2194fd48881",
 "icons/favicon.ico": "24c208260000e57304d010314c6f30c1",
 "favicon.png": "2a1a95284527b15f2097a624860a4cf1",
-"index.html": "14b34fd5812f6bf285155cce03dd62b1",
-"/": "14b34fd5812f6bf285155cce03dd62b1"
+"index.html": "463c46dd489cce3a905465295650a6a0",
+"/": "463c46dd489cce3a905465295650a6a0"
 };
 
 // The application shell files that are downloaded before a service worker can
