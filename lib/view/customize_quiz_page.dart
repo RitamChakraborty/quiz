@@ -4,10 +4,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
+import 'package:quiz/widget/start_quiz_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class CustomizeQuizPage extends StatelessWidget {
   static const routeName = "/customizeQuizPage";
+
+  Widget nextPageButton(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      width: size.width,
+      height: size.height * 0.07,
+      child: CustomPaint(
+        painter: StartQuizButton(),
+        child: Center(
+          child: IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_up_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(QuizPage.routeName);
+            },
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,17 +197,21 @@ class CustomizeQuizPage extends StatelessWidget {
         return Material(
           color: Colors.grey.shade100,
           child: Scaffold(
-            floatingActionButton: startQuizButton,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
             body: SafeArea(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  countCounter(),
-                  questionDifficultyContainer(),
-                  questionTypeContainer(),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        countCounter(),
+                        questionDifficultyContainer(),
+                        questionTypeContainer(),
+                      ],
+                    ),
+                  ),
+                  nextPageButton(context),
                 ],
               ),
             ),
