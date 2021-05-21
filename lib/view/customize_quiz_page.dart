@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
+import 'package:quiz/widget/bouncing_animation.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -21,14 +22,16 @@ class CustomizeQuizPage extends StatelessWidget {
         child: Center(
           child: GestureDetector(
             onVerticalDragUpdate: (details) {},
-            child: IconButton(
-              icon: Icon(
-                Icons.keyboard_arrow_up_outlined,
-                color: Colors.white,
+            child: BouncingAnimation(
+              child: IconButton(
+                icon: Icon(
+                  Icons.keyboard_arrow_up_outlined,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(QuizPage.routeName);
+                },
               ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(QuizPage.routeName);
-              },
             ),
           ),
         ),
