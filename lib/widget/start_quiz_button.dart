@@ -12,12 +12,13 @@ class StartQuizButton extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     path
-      ..lineTo(0, 10)
-      ..lineTo(x / 2, 0)
-      ..lineTo(x, 10)
-      ..lineTo(x, y)
       ..lineTo(0, y)
-      ..lineTo(0, 10);
+      ..quadraticBezierTo(x / 4, y - 5, x / 2 - 20, 10)
+      ..quadraticBezierTo(x / 2 - 10, 0, x / 2, 0)
+      ..quadraticBezierTo(x / 2 + 10, 0, x / 2 + 20, 10)
+      ..quadraticBezierTo(3 * x / 4, y - 5, x, y)
+      ..lineTo(x, y)
+      ..lineTo(0, y);
 
     canvas.drawPath(path, paint);
   }
