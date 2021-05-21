@@ -19,14 +19,17 @@ class CustomizeQuizPage extends StatelessWidget {
       child: CustomPaint(
         painter: StartQuizButton(),
         child: Center(
-          child: IconButton(
-            icon: Icon(
-              Icons.keyboard_arrow_up_outlined,
-              color: Colors.white,
+          child: GestureDetector(
+            onVerticalDragUpdate: (details) {},
+            child: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_up_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(QuizPage.routeName);
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(QuizPage.routeName);
-            },
           ),
         ),
       ),
