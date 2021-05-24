@@ -13,29 +13,42 @@ class CustomizeQuizPage extends StatelessWidget {
 
   Widget nextPageButton(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double height = 40;
 
-    return Container(
-      width: size.width,
-      height: size.height * 0.07,
-      child: CustomPaint(
-        painter: StartQuizButton(),
-        child: Center(
-          child: GestureDetector(
-            onVerticalDragUpdate: (details) {},
+    return StatefulBuilder(
+      builder: (context, setState) {
+        print('height: $height');
+
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          width: size.width,
+          height: height,
+          child: CustomPaint(
+            painter: StartQuizButton(),
             child: BouncingAnimation(
-              child: IconButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_up_outlined,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(QuizPage.routeName);
+              child: GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  double y = -details.localPosition.dy;
+
+                  setState(() {
+                    height = y > 40 ? y : 40;
+                    print(height);
+                  });
                 },
+                child: IconButton(
+                  icon: Icon(
+                    Icons.keyboard_arrow_up_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(QuizPage.routeName);
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -177,18 +190,6 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    Widget startQuizButton = MaterialButton(
-      onPressed: startQuiz,
-      color: Colors.pink,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      child: Text("Let's GO!"),
-    );
-
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
       bloc: quizCustomizer,
       listener: (context, state) {
@@ -204,20 +205,22 @@ class CustomizeQuizPage extends StatelessWidget {
           color: Colors.grey.shade100,
           child: Scaffold(
             body: SafeArea(
-              child: Column(
+              child: Stack(
+                fit: StackFit.expand,
                 children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        countCounter(),
-                        questionDifficultyContainer(),
-                        questionTypeContainer(),
-                      ],
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      countCounter(),
+                      questionDifficultyContainer(),
+                      questionTypeContainer(),
+                    ],
                   ),
-                  nextPageButton(context),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: nextPageButton(context),
+                  ),
                 ],
               ),
             ),

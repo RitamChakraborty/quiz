@@ -34,7 +34,8 @@ class _BouncingAnimationState extends State<BouncingAnimation>
       animation: animation,
       builder: (_, child) {
         return Container(
-          margin: EdgeInsets.only(bottom: animation.value),
+          alignment: Alignment.topCenter,
+          padding: EdgeInsets.only(top: animation.value),
           child: child,
         );
       },
