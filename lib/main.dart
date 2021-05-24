@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.purple,
           brightness: Brightness.dark,
-          accentColor: Colors.amber,
+          accentColor: Colors.deepOrangeAccent,
           backgroundColor: Color(0xFF263058),
           scaffoldBackgroundColor: Color(0xFF263058),
         ),

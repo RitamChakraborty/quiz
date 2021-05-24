@@ -16,7 +16,7 @@ class CustomizeQuizPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
-    BlocProvider.of<QuizCustomizerCubit>(context);
+        BlocProvider.of<QuizCustomizerCubit>(context);
 
     void changeQuestionCount(double value) {
       quizCustomizer.changeQuestionCount(value.toInt());
@@ -120,12 +120,13 @@ class CustomizeQuizPage extends StatelessWidget {
       return Expanded(
         child: Container(
           alignment: Alignment.topCenter,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(top: 32, bottom: 16),
           child: MaterialSegmentedControl(
             selectionIndex: quizCustomizer.questionTypeIndex,
-            borderColor: Colors.grey,
-            selectedColor: Colors.purple,
-            unselectedColor: Colors.grey.shade300,
+            selectedColor: Theme.of(context).accentColor,
+            unselectedColor: Theme.of(context).backgroundColor,
+            borderRadius: 0,
+            verticalOffset: 16,
             children: {
               0: segmentedSliderChild("MCQ"),
               1: segmentedSliderChild("True-False"),
