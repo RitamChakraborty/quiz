@@ -17,8 +17,6 @@ class CustomizeQuizPage extends StatelessWidget {
 
     return StatefulBuilder(
       builder: (context, setState) {
-        print('height: $height');
-
         return AnimatedContainer(
           duration: Duration(milliseconds: 500),
           width: size.width,
@@ -32,7 +30,13 @@ class CustomizeQuizPage extends StatelessWidget {
 
                   setState(() {
                     height = y > 40 ? y : 40;
-                    print(height);
+                  });
+                },
+                onVerticalDragEnd: (details) {
+                  setState(() {
+                    while (height > 40) {
+                      --height;
+                    }
                   });
                 },
                 child: IconButton(
