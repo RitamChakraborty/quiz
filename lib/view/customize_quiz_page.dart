@@ -78,7 +78,14 @@ class CustomizeQuizPage extends StatelessWidget {
               duration: Duration(milliseconds: 400),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withOpacity(0.8),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Theme.of(context).primaryColor.withOpacity(0.8),
+                    Theme.of(context).accentColor.withOpacity(0.8),
+                  ],
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
