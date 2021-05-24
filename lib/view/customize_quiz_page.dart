@@ -17,6 +17,7 @@ class CustomizeQuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
+    Size size = MediaQuery.of(context).size;
 
     void changeQuestionCount(double value) {
       quizCustomizer.changeQuestionCount(value.toInt());
@@ -60,16 +61,16 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    final selectedMargin = const EdgeInsets.all(8.0);
+    final selectedMargin = const EdgeInsets.all(4.0);
 
-    final unselectedMargin = const EdgeInsets.all(16.0);
+    final unselectedMargin = const EdgeInsets.all(8.0);
 
     Widget difficultyButton(int index, String difficulty) {
       return Expanded(
         child: GestureDetector(
           onTap: () => changeDifficulty(index),
           child: AspectRatio(
-            aspectRatio: 1.0,
+            aspectRatio: size.width / size.height,
             child: AnimatedContainer(
               margin: index == quizCustomizer.difficultyIndex
                   ? selectedMargin
@@ -79,10 +80,15 @@ class CustomizeQuizPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
-              child: Text(
-                difficulty,
-                style: TextStyle(
-                  fontSize: 24.0,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FittedBox(
+                  child: Text(
+                    difficulty,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -93,15 +99,18 @@ class CustomizeQuizPage extends StatelessWidget {
 
     Widget questionDifficultyContainer() {
       return Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            difficultyButton(0, "Easy"),
-            difficultyButton(1, "Medium"),
-            difficultyButton(2, "Hard"),
-            difficultyButton(3, "Mixed"),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              difficultyButton(0, "Easy"),
+              difficultyButton(1, "Medium"),
+              difficultyButton(2, "Hard"),
+              difficultyButton(3, "Mixed"),
+            ],
+          ),
         ),
       );
     }
