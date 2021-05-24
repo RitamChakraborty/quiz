@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +16,7 @@ class CustomizeQuizPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
-        BlocProvider.of<QuizCustomizerCubit>(context);
+    BlocProvider.of<QuizCustomizerCubit>(context);
 
     void changeQuestionCount(double value) {
       quizCustomizer.changeQuestionCount(value.toInt());
@@ -58,20 +60,6 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
-    final selectedBoxShadow = BoxShadow(
-      color: Colors.grey.shade300,
-      offset: const Offset(8, 8),
-      blurRadius: 5,
-      spreadRadius: 3,
-    );
-
-    final unselectedBoxShadow = BoxShadow(
-      color: Colors.grey.shade400,
-      offset: const Offset(6, 6),
-      blurRadius: 4,
-      spreadRadius: 3,
-    );
-
     final selectedMargin = const EdgeInsets.all(8.0);
 
     final unselectedMargin = const EdgeInsets.all(16.0);
@@ -89,14 +77,14 @@ class CustomizeQuizPage extends StatelessWidget {
               duration: Duration(milliseconds: 400),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.green,
-                boxShadow: [
-                  index == quizCustomizer.difficultyIndex
-                      ? selectedBoxShadow
-                      : unselectedBoxShadow
-                ],
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
-              child: Text(difficulty),
+              child: Text(
+                difficulty,
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
             ),
           ),
         ),
