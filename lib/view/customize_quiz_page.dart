@@ -212,7 +212,6 @@ class CustomizeQuizPage extends StatelessWidget {
       },
       builder: (context, state) {
         return Material(
-          color: Colors.grey.shade100,
           child: Scaffold(
             body: SafeArea(
               child: Stack(

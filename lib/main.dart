@@ -48,9 +48,10 @@ class MyApp extends StatelessWidget {
           return null;
         },
         theme: ThemeData(
-          brightness: Brightness.light,
-          accentColor: Colors.grey,
-          backgroundColor: Colors.grey[200],
+          brightness: Brightness.dark,
+          accentColor: Colors.deepPurpleAccent,
+          backgroundColor: Color(0xFF263058),
+          scaffoldBackgroundColor: Color(0xFF263058),
         ),
       ),
     );
