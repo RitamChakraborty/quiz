@@ -155,6 +155,14 @@ class CustomizeQuizPage extends StatelessWidget {
 
       return StatefulBuilder(
         builder: (context, setState) {
+          if (height >= size.height / 2) {
+            print('here');
+            WidgetsFlutterBinding.ensureInitialized()
+                .addPostFrameCallback((timeStamp) {
+              startQuiz();
+            });
+          }
+
           return AnimatedContainer(
             duration: Duration(milliseconds: 500),
             width: size.width,
