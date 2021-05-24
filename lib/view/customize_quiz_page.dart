@@ -11,51 +11,6 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 class CustomizeQuizPage extends StatelessWidget {
   static const routeName = "/customizeQuizPage";
 
-  Widget nextPageButton(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = 40;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return AnimatedContainer(
-          duration: Duration(milliseconds: 500),
-          width: size.width,
-          height: height,
-          child: CustomPaint(
-            painter: StartQuizButton(),
-            child: BouncingAnimation(
-              child: GestureDetector(
-                onVerticalDragUpdate: (details) {
-                  double y = -details.localPosition.dy;
-
-                  setState(() {
-                    height = y > 40 ? y : 40;
-                  });
-                },
-                onVerticalDragEnd: (details) {
-                  setState(() {
-                    while (height > 40) {
-                      --height;
-                    }
-                  });
-                },
-                child: IconButton(
-                  icon: Icon(
-                    Icons.keyboard_arrow_up_outlined,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(QuizPage.routeName);
-                  },
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     QuizCustomizerCubit quizCustomizer =
@@ -194,6 +149,49 @@ class CustomizeQuizPage extends StatelessWidget {
       );
     }
 
+    Widget nextPageButton() {
+      Size size = MediaQuery.of(context).size;
+      double height = 40;
+
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 500),
+            width: size.width,
+            height: height,
+            child: CustomPaint(
+              painter: StartQuizButton(),
+              child: BouncingAnimation(
+                child: GestureDetector(
+                  onVerticalDragUpdate: (details) {
+                    double y = -details.localPosition.dy;
+
+                    setState(() {
+                      height = y > 40 ? y : 40;
+                    });
+                  },
+                  onVerticalDragEnd: (details) {
+                    setState(() {
+                      while (height > 40) {
+                        --height;
+                      }
+                    });
+                  },
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_up_outlined,
+                      color: Colors.white,
+                    ),
+                    onPressed: startQuiz,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
       bloc: quizCustomizer,
       listener: (context, state) {
@@ -223,7 +221,7 @@ class CustomizeQuizPage extends StatelessWidget {
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: nextPageButton(context),
+                    child: nextPageButton(),
                   ),
                 ],
               ),
