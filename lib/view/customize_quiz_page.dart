@@ -41,7 +41,11 @@ class CustomizeQuizPage extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           padding: const EdgeInsets.all(16),
           child: SleekCircularSlider(
-            appearance: CircularSliderAppearance(),
+            appearance: CircularSliderAppearance(
+                customColors: CustomSliderColors(
+              progressBarColor: Theme.of(context).accentColor,
+              trackColor: Theme.of(context).primaryColor,
+            )),
             initialValue: quizCustomizer.questionCount.toDouble(),
             min: 1,
             max: 50,
@@ -63,7 +67,7 @@ class CustomizeQuizPage extends StatelessWidget {
 
     final selectedMargin = const EdgeInsets.all(4.0);
 
-    final unselectedMargin = const EdgeInsets.all(8.0);
+    final unselectedMargin = const EdgeInsets.all(12.0);
 
     Widget difficultyButton(int index, String difficulty) {
       return Expanded(
@@ -139,7 +143,7 @@ class CustomizeQuizPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 32, bottom: 16),
           child: MaterialSegmentedControl(
             selectionIndex: quizCustomizer.questionTypeIndex,
-            selectedColor: Theme.of(context).accentColor,
+            selectedColor: Theme.of(context).primaryColor,
             unselectedColor: Theme.of(context).backgroundColor,
             borderRadius: 0,
             verticalOffset: 16,
