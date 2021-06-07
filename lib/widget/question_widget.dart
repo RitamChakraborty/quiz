@@ -121,8 +121,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                       answered = true;
                     });
 
-              widget._answer(answered && index == correctAnswerIndex);
-            },
+                    widget._answer(answered && index == correctAnswerIndex);
+                  },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 400),
               margin:
