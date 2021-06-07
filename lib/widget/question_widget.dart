@@ -24,9 +24,12 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   List<String> options;
   List<Widget> optionWidgets;
   List<Color> colors;
+  List<Widget> resultIcons;
   final color = Colors.deepPurple;
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
+  final correctIcon = Icon(Icons.check_circle_outline_rounded);
+  final wrongIcon = Icon(Icons.cancel_outlined);
   var correctAnswerIndex;
   var answered;
 
@@ -37,11 +40,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     options = widget._question.options;
     optionWidgets = [];
     colors = [];
+    resultIcons = [];
     correctAnswerIndex = 0;
     answered = false;
 
     for (int i = 0; i < options.length; ++i) {
       colors.add(color);
+      resultIcons.add(Container());
 
       if (options[i] == widget._question.correctAnswer) {
         correctAnswerIndex = i;
@@ -56,11 +61,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     options = widget._question.options;
     optionWidgets = [];
     colors = [];
+    resultIcons = [];
     correctAnswerIndex = 0;
     answered = false;
 
     for (int i = 0; i < options.length; ++i) {
       colors.add(color);
+      resultIcons.add(Container());
 
       if (options[i] == widget._question.correctAnswer) {
         correctAnswerIndex = i;
@@ -73,8 +80,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           padding: const EdgeInsets.only(bottom: 24),
           alignment: Alignment.center,
           child: Material(
-            color: Colors.purple,
-            elevation: 10,
+            color: Colors.transparent,
             child: Container(
               margin: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.05),
@@ -96,6 +102,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   Widget optionWidget(int index, String option, {bool isCorrect = false}) =>
       Container(
+        margin: const EdgeInsets.symmetric(horizontal: 32),
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
         child: Material(
           elevation: 10,
@@ -107,25 +114,38 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     setState(() {
                       colors[index] = wrongColor;
                       colors[correctAnswerIndex] = correctColor;
+
+                      resultIcons[index] = wrongIcon;
+                      resultIcons[correctAnswerIndex] = correctIcon;
+
                       answered = true;
                     });
 
-                    widget._answer(answered && index == correctAnswerIndex);
-                  },
+              widget._answer(answered && index == correctAnswerIndex);
+            },
             child: AnimatedContainer(
-              margin: const EdgeInsets.all(16),
-              alignment: Alignment.center,
               duration: Duration(milliseconds: 400),
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(
-                  option,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        option,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 4.0),
+                  resultIcons[index],
+                ],
               ),
             ),
           ),
