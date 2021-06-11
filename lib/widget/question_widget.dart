@@ -28,8 +28,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   final color = Colors.deepPurple;
   final correctColor = Colors.green;
   final wrongColor = Colors.red;
-  final correctIcon = Icon(Icons.check_circle_outline_rounded);
-  final wrongIcon = Icon(Icons.cancel_outlined);
+  Widget correctIcon;
+  Widget wrongIcon;
   var correctAnswerIndex;
   var answered;
 
@@ -106,7 +106,14 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         padding: EdgeInsets.only(bottom: index == options.length - 1 ? 0 : 16),
         child: Material(
           elevation: 10,
-          color: colors[index],
+          color: color,
+          shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(
+              color: colors[index],
+              width: 2,
+            ),
+          ),
           child: MaterialButton(
             onPressed: answered
                 ? null
@@ -115,8 +122,14 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                       colors[index] = wrongColor;
                       colors[correctAnswerIndex] = correctColor;
 
-                      resultIcons[index] = wrongIcon;
-                      resultIcons[correctAnswerIndex] = correctIcon;
+                      resultIcons[index] = Icon(
+                        Icons.cancel_outlined,
+                        color: colors[index],
+                      );
+                      resultIcons[correctAnswerIndex] = Icon(
+                        Icons.check_circle_outline_rounded,
+                        color: colors[index],
+                      );
 
                       answered = true;
                     });
@@ -128,10 +141,14 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               margin:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
               alignment: Alignment.centerLeft,
-              child: Row(
+              child: Flex(
+                direction: Axis.horizontal,
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  Flexible(
+                    flex: 10,
+                    fit: FlexFit.loose,
                     child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
@@ -143,8 +160,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 4.0),
-                  resultIcons[index],
+                  Flexible(
+                    flex: 1,
+                    child: resultIcons[index],
+                  ),
                 ],
               ),
             ),
