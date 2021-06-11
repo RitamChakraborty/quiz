@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
     List<QuestionCategory> categories = QuestionCategory.values
@@ -77,46 +78,46 @@ class _HomePageState extends State<HomePage>
     };
 
     Widget categoryTile({@required int index}) => InkWell(
-          onTap: () {
-            quizCustomizer.selectCategory(index);
-          },
+      onTap: () {
+        quizCustomizer.selectCategory(index);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Card(
+          elevation: 10,
           child: Container(
-            padding: const EdgeInsets.all(16),
-            child: Card(
-              elevation: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.asset(
-                            "assets/images/${categories[index].title.toLowerCase()}.webp")
-                        .image,
-                  ),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: Image.asset(
+                    "assets/images/${categories[index].title.toLowerCase()}.webp")
+                    .image,
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black54,
+                  ],
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.transparent,
-                        Colors.black54,
-                      ],
-                    ),
-                  ),
-                  child: FittedBox(
-                    alignment: Alignment.bottomRight,
-                    fit: BoxFit.scaleDown,
-                    child: SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16.0, bottom: 12, right: 8),
-                        child: Text(
-                          "${categories[index].title.toUpperCase()}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
+              ),
+              child: FittedBox(
+                alignment: Alignment.bottomRight,
+                fit: BoxFit.scaleDown,
+                child: SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, bottom: 12, right: 8),
+                    child: Text(
+                      "${categories[index].title.toUpperCase()}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                      ),
                         ),
                       ),
                     ),
@@ -126,6 +127,49 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         );
+
+    final Widget sliverAppBar = SliverAppBar(
+      expandedHeight: size.height * 0.15,
+      collapsedHeight: size.height * 0.075,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      flexibleSpace: LayoutBuilder(
+        builder: (context, constraints) {
+          double appBarHeight =
+              constraints.biggest.height; //getting AppBar height
+          bool isExpanded =
+              appBarHeight >= size.height * 0.12; //check if AppBar is expanded
+
+          return AnimatedOpacity(
+            duration: Duration(milliseconds: 400),
+            opacity: isExpanded ? 1 : 0,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              alignment: Alignment.bottomLeft,
+              padding: isExpanded
+                  ? EdgeInsets.only(left: 16)
+                  : EdgeInsets.only(
+                      left: 16,
+                      bottom: size.height * .15,
+                    ),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: "Choose a",
+                        style: Theme.of(context).textTheme.headline4),
+                    TextSpan(
+                      text: "\nCategory",
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
 
     return BlocConsumer<QuizCustomizerCubit, AbstractQuizCustomizerState>(
       bloc: quizCustomizer,
@@ -142,13 +186,14 @@ class _HomePageState extends State<HomePage>
               animationController: _animationController,
             ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniCenterFloat,
+            FloatingActionButtonLocation.miniCenterFloat,
             body: SafeArea(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: CustomScrollView(
                   controller: _scrollController,
                   slivers: [
+                    sliverAppBar,
                     SliverGrid(
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: getMaxCrossAxisExtend(),
