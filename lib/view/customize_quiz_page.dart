@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
+import 'package:quiz/animation/bouncing_animation.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
-import 'package:quiz/widget/bouncing_animation.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
