@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
+import 'package:quiz/widget/category_tile.dart';
 import 'package:quiz/widget/feeling_lucky_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -77,57 +78,6 @@ class _HomePageState extends State<HomePage>
       quizCustomizer.selectCategory(0);
     };
 
-    Widget categoryTile({@required int index}) => InkWell(
-      onTap: () {
-        quizCustomizer.selectCategory(index);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        child: Card(
-          elevation: 10,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(
-                    "assets/images/${categories[index].title.toLowerCase()}.webp")
-                    .image,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black54,
-                  ],
-                ),
-              ),
-              child: FittedBox(
-                alignment: Alignment.bottomRight,
-                fit: BoxFit.scaleDown,
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, bottom: 12, right: 8),
-                    child: Text(
-                      "${categories[index].title.toUpperCase()}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
     final Widget sliverAppBar = SliverAppBar(
       expandedHeight: size.height * 0.15,
       collapsedHeight: size.height * 0.075,
@@ -186,7 +136,7 @@ class _HomePageState extends State<HomePage>
               animationController: _animationController,
             ),
             floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterFloat,
+                FloatingActionButtonLocation.miniCenterFloat,
             body: SafeArea(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -200,8 +150,12 @@ class _HomePageState extends State<HomePage>
                         childAspectRatio: 1,
                       ),
                       delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) =>
-                            categoryTile(index: index),
+                        (BuildContext context, int index) => CategoryTile(
+                          questionCategory: categories[index],
+                          onTap: () {
+                            quizCustomizer.selectCategory(index);
+                          },
+                        ),
                         childCount: categories.length,
                       ),
                     ),
