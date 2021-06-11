@@ -146,15 +146,21 @@ class _HomePageState extends State<HomePage>
             body: SafeArea(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: GridView.builder(
+                child: CustomScrollView(
                   controller: _scrollController,
-                  itemCount: categories.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      categoryTile(index: index),
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: getMaxCrossAxisExtend(),
-                    childAspectRatio: 1,
-                  ),
+                  slivers: [
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: getMaxCrossAxisExtend(),
+                        childAspectRatio: 1,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) =>
+                            categoryTile(index: index),
+                        childCount: categories.length,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
