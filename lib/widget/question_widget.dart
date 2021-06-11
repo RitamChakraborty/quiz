@@ -121,14 +121,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     setState(() {
                       colors[index] = wrongColor;
                       colors[correctAnswerIndex] = correctColor;
-
                       resultIcons[index] = Icon(
                         Icons.cancel_outlined,
-                        color: colors[index],
+                        color: wrongColor,
                       );
                       resultIcons[correctAnswerIndex] = Icon(
                         Icons.check_circle_outline_rounded,
-                        color: colors[index],
+                        color: correctColor,
                       );
 
                       answered = true;

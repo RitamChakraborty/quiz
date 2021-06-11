@@ -21,7 +21,7 @@ class _CategoryTileAnimationState extends State<CategoryTileAnimation>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     animation = Tween<double>(begin: 48, end: 0).animate(CurvedAnimation(
       parent: animationController,
       curve: Curves.easeInOut,
