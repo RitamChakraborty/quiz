@@ -16,7 +16,13 @@ class ScorePage extends StatelessWidget {
         },
         child: Container(
           child: Center(
-            child: Text("${result.marksObtained}/${result.totalMarks}"),
+            child: Column(
+              children: [
+                Text("${result.marksObtained}/${result.totalMarks}"),
+                Text(result.percentageText),
+                Text(result.comment),
+              ],
+            ),
           ),
         ),
       ),
