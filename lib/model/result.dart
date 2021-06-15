@@ -38,13 +38,13 @@ class Result {
     } else if (percentage > 30 && percentage <= 40) {
       return "Marginal";
     } else if (percentage > 20 && percentage <= 30) {
-      return "Not good enough";
+      return "Not Good Enough";
     } else if (percentage > 10 && percentage <= 20) {
-      return "Try harder next time";
+      return "Try Harder Next Time";
     } else if (percentage > 0 && percentage <= 10) {
-      return "You can do better!";
+      return "You Can Do Better!";
     } else if (percentage == 0) {
-      return "Better luck next time";
+      return "Better Luck Next Time";
     }
 
     return "";
