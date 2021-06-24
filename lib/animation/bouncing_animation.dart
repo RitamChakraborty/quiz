@@ -15,6 +15,12 @@ class _BouncingAnimationState extends State<BouncingAnimation>
   Animation<double> animation;
 
   @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     animationController =

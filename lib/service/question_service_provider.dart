@@ -41,7 +41,7 @@ class QuestionServiceProvider extends ChangeNotifier {
     ++_index;
 
     if (index == _questions.length) {
-      _completed = true;
+      refreshCompleted(true);
     }
 
     notifyListeners();
@@ -61,5 +61,9 @@ class QuestionServiceProvider extends ChangeNotifier {
     // _questions.forEach((question) => print(question.toJson()));
 
     notifyListeners();
+  }
+
+  void refreshCompleted(bool value) {
+    _completed = value;
   }
 }
