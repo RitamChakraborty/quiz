@@ -47,23 +47,29 @@ class _ScorePageState extends State<ScorePage>
 
     _controller
       ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _controller.dispose();
-        }
+        // if (status == AnimationStatus.completed) {
+        //   _controller.dispose();
+        // }
       })
       ..forward();
+  }
+
+  void playAgain() {
+    // Todo: Fix route
+    Navigator.of(context)
+        .popUntil(ModalRoute.withName(Navigator.defaultRouteName));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final Result result = ModalRoute.of(context).settings.arguments as Result;
     double height = MediaQuery.of(context).size.height;
-
-    void playAgain() {
-      // Todo: Fix route
-      Navigator.of(context)
-          .popUntil(ModalRoute.withName(Navigator.defaultRouteName));
-    }
 
     Widget marks = Text(
       "${result.marksObtained} / ${result.totalMarks}",

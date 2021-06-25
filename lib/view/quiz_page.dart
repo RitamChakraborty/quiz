@@ -112,6 +112,7 @@ class QuizPage extends StatelessWidget {
         bool completed = questionService.completed;
 
         if (completed) {
+          questionService.refreshCompleted(false);
           WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
             (timeStamp) {
               Navigator.of(context).pushNamed(
