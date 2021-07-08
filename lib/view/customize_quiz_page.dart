@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/animation/bouncing_animation.dart';
+import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
@@ -23,8 +24,8 @@ class CustomizeQuizPage extends StatelessWidget {
       quizCustomizer.changeQuestionCount(value.toInt());
     }
 
-    void changeDifficulty(int index) {
-      quizCustomizer.changeDifficulty(index);
+    void changeDifficulty(QuestionDifficulty questionDifficulty) {
+      quizCustomizer.changeDifficulty(questionDifficulty);
     }
 
     void changeQuestionType(dynamic value) {
@@ -69,14 +70,15 @@ class CustomizeQuizPage extends StatelessWidget {
 
     final unselectedMargin = const EdgeInsets.all(12.0);
 
-    Widget difficultyButton(int index, String difficulty) {
+    Widget difficultyButton(
+        QuestionDifficulty questionDifficulty, String difficulty) {
       return Expanded(
         child: GestureDetector(
-          onTap: () => changeDifficulty(index),
+          onTap: () => changeDifficulty(questionDifficulty),
           child: AspectRatio(
             aspectRatio: size.width / size.height,
             child: AnimatedContainer(
-              margin: index == quizCustomizer.difficultyIndex
+              margin: questionDifficulty == quizCustomizer.difficulty
                   ? selectedMargin
                   : unselectedMargin,
               duration: Duration(milliseconds: 400),
@@ -116,10 +118,10 @@ class CustomizeQuizPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              difficultyButton(0, "Easy"),
-              difficultyButton(1, "Medium"),
-              difficultyButton(2, "Hard"),
-              difficultyButton(3, "Mixed"),
+              difficultyButton(QuestionDifficulty.EASY, "Easy"),
+              difficultyButton(QuestionDifficulty.MEDIUM, "Medium"),
+              difficultyButton(QuestionDifficulty.HARD, "Hard"),
+              difficultyButton(QuestionDifficulty.ANY, "Mixed"),
             ],
           ),
         ),

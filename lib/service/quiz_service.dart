@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/model/quiz_category.dart';
 
@@ -15,7 +16,7 @@ class QuizService {
   QuizParameter getQuizParameter({
     @required int categoryIndex,
     @required int questionCount,
-    @required int difficultyIndex,
+    @required QuestionDifficulty questionDifficulty,
     @required int questionTypeIndex,
   }) {
     int category;
@@ -26,22 +27,16 @@ class QuizService {
       category = categoryIndex + 8;
     }
 
-    switch (difficultyIndex) {
-      case 1:
+    switch (questionDifficulty) {
+      case QuestionDifficulty.EASY:
+      case QuestionDifficulty.MEDIUM:
+      case QuestionDifficulty.HARD:
         {
-          difficulty = "easy";
+          difficulty = questionDifficulty.value;
           break;
         }
-      case 2:
-        {
-          difficulty = "medium";
-          break;
-        }
-      case 3:
-        {
-          difficulty = "hard";
-          break;
-        }
+      case QuestionDifficulty.ANY:
+        break;
     }
 
     switch (questionTypeIndex) {

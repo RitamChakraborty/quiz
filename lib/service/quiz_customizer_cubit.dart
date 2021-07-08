@@ -22,7 +22,6 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   QuizParameter _quizParameter;
   int _quizCategory = 0;
   int _questionCount = 10;
-  int _difficultyIndex = 3;
   int _questionTypeIndex = 2;
   QuestionCategory _category = QuestionCategory.ANY;
   QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
@@ -33,8 +32,6 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
   int get quizCategory => _quizCategory;
 
   int get questionCount => _questionCount;
-
-  int get difficultyIndex => _difficultyIndex;
 
   int get questionTypeIndex => _questionTypeIndex;
 
@@ -56,9 +53,8 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     emit(ParameterUpdatedState());
   }
 
-  void changeDifficulty(int index,
-      {QuestionDifficulty questionDifficulty = QuestionDifficulty.ANY}) {
-    _difficultyIndex = index;
+  void changeDifficulty(
+      [QuestionDifficulty questionDifficulty = QuestionDifficulty.ANY]) {
     _difficulty = questionDifficulty;
     emit(ParameterUpdatedState());
   }
@@ -74,7 +70,7 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     _quizParameter = _quizService.getQuizParameter(
       categoryIndex: quizCategory,
       questionCount: questionCount,
-      difficultyIndex: difficultyIndex,
+      questionDifficulty: _difficulty,
       questionTypeIndex: questionTypeIndex,
     );
 
