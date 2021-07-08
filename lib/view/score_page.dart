@@ -45,17 +45,10 @@ class _ScorePageState extends State<ScorePage>
       ),
     );
 
-    _controller
-      ..addStatusListener((status) {
-        // if (status == AnimationStatus.completed) {
-        //   _controller.dispose();
-        // }
-      })
-      ..forward();
+    _controller.forward();
   }
 
   void playAgain() {
-    // Todo: Fix route
     Navigator.of(context)
         .popUntil(ModalRoute.withName(Navigator.defaultRouteName));
   }

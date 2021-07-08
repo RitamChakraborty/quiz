@@ -30,30 +30,6 @@ class MyApp extends StatelessWidget {
           QuizPage.routeName: (context) => QuizPage(),
           ScorePage.routeName: (context) => ScorePage(),
         },
-        onGenerateRoute: (settings) {
-          String routeName = settings.name;
-
-          if (routeName == HomePage.routeName) {
-            return MaterialPageRoute(builder: (_) => HomePage());
-          } else if (routeName == CustomizeQuizPage.routeName) {
-            print('here');
-            return PageRouteBuilder(
-                pageBuilder: (_, __, ___) => CustomizeQuizPage(),
-                transitionsBuilder: (_, animation, __, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                transitionDuration: Duration(milliseconds: 4000));
-          } else if (routeName == QuizPage.routeName) {
-            return MaterialPageRoute(builder: (_) => QuizPage());
-          } else if (routeName == QuizPage.routeName) {
-            return MaterialPageRoute(builder: (_) => ScorePage());
-          }
-
-          return null;
-        },
         theme: ThemeData(
           primaryColor: Colors.purple,
           brightness: Brightness.dark,
