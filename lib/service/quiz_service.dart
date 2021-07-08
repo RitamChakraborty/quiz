@@ -1,7 +1,8 @@
 import 'package:meta/meta.dart';
+import 'package:quiz/model/question_category.dart';
 import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_parameter.dart';
-import 'package:quiz/model/quiz_category.dart';
+import 'package:quiz/model/question_type.dart';
 
 class QuizService {
   /// Returns a list of category names in title case
@@ -14,43 +15,15 @@ class QuizService {
       }).toList();
 
   QuizParameter getQuizParameter({
-    @required int categoryIndex,
+    @required QuestionCategory questionCategory,
     @required int questionCount,
     @required QuestionDifficulty questionDifficulty,
-    @required int questionTypeIndex,
+    @required QuestionType questionType,
   }) {
-    int category;
-    String difficulty;
-    String type;
-
-    if (categoryIndex != 0) {
-      category = categoryIndex + 8;
-    }
-
-    switch (questionDifficulty) {
-      case QuestionDifficulty.EASY:
-      case QuestionDifficulty.MEDIUM:
-      case QuestionDifficulty.HARD:
-        {
-          difficulty = questionDifficulty.value;
-          break;
-        }
-      case QuestionDifficulty.ANY:
-        break;
-    }
-
-    switch (questionTypeIndex) {
-      case 0:
-        {
-          type = "multiple";
-          break;
-        }
-      case 1:
-        {
-          type = "boolean";
-          break;
-        }
-    }
+    int category =
+        questionCategory == QuestionCategory.ANY ? 0 : questionCategory.value;
+    String difficulty = questionDifficulty.value;
+    String type = questionType.value;
 
     return QuizParameter(
       amount: questionCount,

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/animation/category_tile_animation.dart';
-import 'package:quiz/model/quiz_category.dart';
+import 'package:quiz/model/question_category.dart';
 
 class CategoryTile extends StatelessWidget {
   final QuestionCategory _questionCategory;

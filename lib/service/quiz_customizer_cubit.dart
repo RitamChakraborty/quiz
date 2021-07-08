@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/model/question_category.dart';
 import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_parameter.dart';
 import 'package:quiz/model/question_type.dart';
-import 'package:quiz/model/quiz_category.dart';
 import 'package:quiz/service/quiz_service.dart';
 
 abstract class AbstractQuizCustomizerState {}
@@ -20,20 +20,14 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   final QuizService _quizService = QuizService();
   QuizParameter _quizParameter;
-  int _quizCategory = 0;
   int _questionCount = 10;
-  int _questionTypeIndex = 2;
   QuestionCategory _category = QuestionCategory.ANY;
   QuestionDifficulty _difficulty = QuestionDifficulty.ANY;
   QuestionType _type = QuestionType.ANY;
 
   QuizParameter get quizParameter => _quizParameter;
 
-  int get quizCategory => _quizCategory;
-
   int get questionCount => _questionCount;
-
-  int get questionTypeIndex => _questionTypeIndex;
 
   QuestionCategory get category => _category;
 
@@ -41,9 +35,7 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
 
   QuestionType get type => _type;
 
-  void selectCategory(int category,
-      {QuestionCategory questionCategory = QuestionCategory.ANY}) {
-    _quizCategory = category;
+  void selectCategory(QuestionCategory questionCategory) {
     _category = questionCategory;
     emit(QuizCategoryChosenState());
   }
@@ -53,25 +45,22 @@ class QuizCustomizerCubit extends Cubit<AbstractQuizCustomizerState> {
     emit(ParameterUpdatedState());
   }
 
-  void changeDifficulty(
-      [QuestionDifficulty questionDifficulty = QuestionDifficulty.ANY]) {
+  void changeDifficulty(QuestionDifficulty questionDifficulty) {
     _difficulty = questionDifficulty;
     emit(ParameterUpdatedState());
   }
 
-  void changeQuestionType(int index,
-      {QuestionType questionType = QuestionType.ANY}) {
-    _questionTypeIndex = index;
+  void changeQuestionType(QuestionType questionType) {
     _type = questionType;
     emit(ParameterUpdatedState());
   }
 
   void startQuiz() {
     _quizParameter = _quizService.getQuizParameter(
-      categoryIndex: quizCategory,
+      questionCategory: _category,
       questionCount: questionCount,
       questionDifficulty: _difficulty,
-      questionTypeIndex: questionTypeIndex,
+      questionType: _type,
     );
 
     print('Quiz Parameter: ${_quizParameter.toJson()}');

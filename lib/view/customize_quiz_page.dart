@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 import 'package:quiz/animation/bouncing_animation.dart';
 import 'package:quiz/model/question_difficulty.dart';
+import 'package:quiz/model/question_type.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
@@ -28,8 +29,8 @@ class CustomizeQuizPage extends StatelessWidget {
       quizCustomizer.changeDifficulty(questionDifficulty);
     }
 
-    void changeQuestionType(dynamic value) {
-      quizCustomizer.changeQuestionType(value as int);
+    void changeQuestionType(dynamic questionType) {
+      quizCustomizer.changeQuestionType(questionType);
     }
 
     void startQuiz() {
@@ -43,10 +44,11 @@ class CustomizeQuizPage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: SleekCircularSlider(
             appearance: CircularSliderAppearance(
-                customColors: CustomSliderColors(
-              progressBarColor: Theme.of(context).accentColor,
-              trackColor: Theme.of(context).primaryColor,
-            )),
+              customColors: CustomSliderColors(
+                progressBarColor: Theme.of(context).accentColor,
+                trackColor: Theme.of(context).primaryColor,
+              ),
+            ),
             initialValue: quizCustomizer.questionCount.toDouble(),
             min: 1,
             max: 50,
@@ -144,15 +146,15 @@ class CustomizeQuizPage extends StatelessWidget {
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.only(top: 32, bottom: 16),
           child: MaterialSegmentedControl(
-            selectionIndex: quizCustomizer.questionTypeIndex,
+            selectionIndex: quizCustomizer.type,
             selectedColor: Theme.of(context).primaryColor,
             unselectedColor: Theme.of(context).backgroundColor,
             borderRadius: 0,
             verticalOffset: 16,
             children: {
-              0: segmentedSliderChild("MCQ"),
-              1: segmentedSliderChild("True-False"),
-              2: segmentedSliderChild("Either"),
+              QuestionType.MULTIPLE: segmentedSliderChild("MCQ"),
+              QuestionType.BOOLEAN: segmentedSliderChild("True-False"),
+              QuestionType.ANY: segmentedSliderChild("Either"),
             },
             onSegmentChosen: changeQuestionType,
           ),
@@ -167,7 +169,6 @@ class CustomizeQuizPage extends StatelessWidget {
       return StatefulBuilder(
         builder: (context, setState) {
           if (height >= size.height / 2) {
-            print('here');
             WidgetsFlutterBinding.ensureInitialized()
                 .addPostFrameCallback((timeStamp) {
               startQuiz();

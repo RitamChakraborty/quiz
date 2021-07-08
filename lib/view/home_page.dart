@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/model/quiz_category.dart';
+import 'package:quiz/model/question_category.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
 import 'package:quiz/widget/category_tile.dart';
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage>
     }
 
     final VoidCallback feelingLuckyButtonOnPressed = () {
-      quizCustomizer.selectCategory(0);
+      quizCustomizer.selectCategory(QuestionCategory.ANY);
     };
 
     final Widget sliverAppBar = SliverAppBar(
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage>
                         (BuildContext context, int index) => CategoryTile(
                           questionCategory: categories[index],
                           onTap: () {
-                            quizCustomizer.selectCategory(index);
+                            quizCustomizer.selectCategory(categories[index]);
                           },
                         ),
                         childCount: categories.length,
