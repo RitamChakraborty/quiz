@@ -78,6 +78,16 @@ class _HomePageState extends State<HomePage>
       quizCustomizer.selectCategory(QuestionCategory.ANY);
     };
 
+    Widget title() {
+      return FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Text(
+          "Choose a Category",
+          style: Theme.of(context).textTheme.headline3,
+        ),
+      );
+    }
+
     final Widget sliverAppBar = SliverAppBar(
       expandedHeight: size.height * 0.15,
       backgroundColor: Colors.transparent,
@@ -96,24 +106,13 @@ class _HomePageState extends State<HomePage>
               duration: Duration(milliseconds: 200),
               alignment: Alignment.bottomLeft,
               padding: isExpanded
-                  ? EdgeInsets.only(left: 16)
+                  ? EdgeInsets.only(left: 16, right: 16)
                   : EdgeInsets.only(
                       left: 16,
+                      right: 16,
                       bottom: size.height * .15,
                     ),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: "Choose a",
-                        style: Theme.of(context).textTheme.headline4),
-                    TextSpan(
-                      text: "\nCategory",
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ],
-                ),
-              ),
+              child: title(),
             ),
           );
         },
