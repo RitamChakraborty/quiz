@@ -16,11 +16,14 @@ class _ClockState extends State<Clock> {
   double rotation = 0;
   Timer timer;
 
-  @override
-  void initState() {
-    super.initState();
+  void resetTimer() {
+    rotation = 0.0;
 
-    timer = Timer.periodic(Duration(milliseconds: 75), (t) {
+    if (timer != null && timer.isActive) {
+      timer.cancel();
+    }
+
+    timer = Timer.periodic(Duration(milliseconds: 150), (t) {
       if (mounted) {
         setState(() {
           rotation++;
@@ -30,17 +33,15 @@ class _ClockState extends State<Clock> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    resetTimer();
+  }
+
+  @override
   void didUpdateWidget(covariant Clock oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    rotation = 0.0;
-    timer = Timer.periodic(Duration(milliseconds: 75), (t) {
-      if (mounted) {
-        setState(() {
-          rotation++;
-        });
-      }
-    });
+    resetTimer();
   }
 
   @override
@@ -51,51 +52,49 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    if (rotation == 200.0) {
+    if (rotation >= 200.0) {
       timer.cancel();
       WidgetsFlutterBinding.ensureInitialized()
           .addPostFrameCallback((timeStamp) {
+        resetTimer();
         widget.onTimerEnd();
       });
     }
 
-    return GestureDetector(
+    return Container(
+      padding: const EdgeInsets.all(2),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+      ),
       child: Container(
-        padding: const EdgeInsets.all(2),
-        alignment: Alignment.center,
+        height: 30,
+        width: 30,
+        alignment: Alignment.topCenter,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: Colors.purple,
         ),
-        child: Container(
-          height: 30,
-          width: 30,
-          alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.purple,
-          ),
-          child: Transform.rotate(
-            angle: pi * rotation / 100.0,
-            // origin: Offset(15, 13),
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                Container(
-                  height: 15,
-                  width: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+        child: Transform.rotate(
+          angle: pi * rotation / 100.0,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Container(
+                height: 15,
+                width: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                Container(
-                  height: 15,
-                  width: 4,
-                  color: Colors.transparent,
-                ),
-              ],
-            ),
+              ),
+              Container(
+                height: 15,
+                width: 4,
+                color: Colors.transparent,
+              ),
+            ],
           ),
         ),
       ),
