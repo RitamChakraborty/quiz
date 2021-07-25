@@ -50,7 +50,6 @@ class CustomizeQuizPage extends StatelessWidget {
             appearance: CircularSliderAppearance(
               customColors: CustomSliderColors(
                 progressBarColor: Theme.of(context).accentColor,
-                trackColor: Theme.of(context).primaryColor,
               ),
             ),
             initialValue: quizCustomizer.questionCount.toDouble(),
