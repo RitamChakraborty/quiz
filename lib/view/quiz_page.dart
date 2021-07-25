@@ -101,68 +101,63 @@ class QuizPage extends StatelessWidget {
     final QuizParameter quizParameter =
         ModalRoute.of(context).settings.arguments as QuizParameter;
 
-    return ChangeNotifierProvider<QuestionServiceProvider>(
-      create: (_) => QuestionServiceProvider(),
-      builder: (context, child) {
-        QuestionServiceProvider questionService =
-            Provider.of<QuestionServiceProvider>(context);
-        int index = questionService.index;
-        int count = questionService.count;
-        bool loading = questionService.loading;
-        bool completed = questionService.completed;
+    QuestionServiceProvider questionService =
+        Provider.of<QuestionServiceProvider>(context);
+    int index = questionService.index;
+    int count = questionService.count;
+    bool loading = questionService.loading;
+    bool completed = questionService.completed;
 
-        if (completed) {
-          questionService.refreshCompleted(false);
-          WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
-            (timeStamp) {
-              Navigator.of(context).pushNamed(
-                ScorePage.routeName,
-                arguments: Result(
-                  marksObtained: questionService.score,
-                  totalMarks: questionService.count,
-                ),
-              );
-            },
-          );
-
-          return Container();
-        }
-
-        if (loading) {
-          questionService.fetchQuestion(quizParameter);
-          return Material(
-            child: Center(
-              child: CircularProgressIndicator(),
+    if (completed) {
+      questionService.refreshCompleted(false);
+      WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+        (timeStamp) {
+          Navigator.of(context).pushNamed(
+            ScorePage.routeName,
+            arguments: Result(
+              marksObtained: questionService.score,
+              totalMarks: questionService.count,
             ),
           );
-        } else {
-          Question question = questionService.question;
-          QuestionWidget questionWidget = QuestionWidget(
-            question: question,
-            answer: questionService.answer,
-          );
+        },
+      );
 
-          return Scaffold(
-            body: SafeArea(
-              child: Material(
-                color: Colors.deepPurple,
-                child: Column(
-                  children: [
-                    questionCounter(
-                      currentIndex: index,
-                      totalCount: count,
-                    ),
-                    Expanded(
-                      child: questionWidget,
-                    ),
-                    buttons(context),
-                  ],
+      return Container();
+    }
+
+    if (loading || questionService.question == null) {
+      questionService.fetchQuestion(quizParameter);
+      return Material(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      Question question = questionService.question;
+      QuestionWidget questionWidget = QuestionWidget(
+        question: question,
+        answer: questionService.answer,
+      );
+
+      return Scaffold(
+        body: SafeArea(
+          child: Material(
+            color: Colors.deepPurple,
+            child: Column(
+              children: [
+                questionCounter(
+                  currentIndex: index,
+                  totalCount: count,
                 ),
-              ),
+                Expanded(
+                  child: questionWidget,
+                ),
+                buttons(context),
+              ],
             ),
-          );
-        }
-      },
-    );
+          ),
+        ),
+      );
+    }
   }
 }

@@ -19,6 +19,14 @@ class QuestionServiceProvider extends ChangeNotifier {
     _completed = false;
   }
 
+  reset() {
+    _questions = null;
+    _index = 0;
+    _score = 0;
+    _loading = true;
+    _completed = false;
+  }
+
   Question get question {
     if (_questions == null || _index == _questions.length) {
       return null;
@@ -57,8 +65,6 @@ class QuestionServiceProvider extends ChangeNotifier {
   void fetchQuestion(QuizParameter quizParameter) async {
     _questions = await questionRepository.getQuestions(quizParameter);
     _loading = false;
-
-    // _questions.forEach((question) => print(question.toJson()));
 
     notifyListeners();
   }

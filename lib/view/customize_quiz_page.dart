@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz/animation/bouncing_animation.dart';
 import 'package:quiz/model/question_difficulty.dart';
 import 'package:quiz/model/question_type.dart';
+import 'package:quiz/service/question_service_provider.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/quiz_page.dart';
 import 'package:quiz/widget/start_quiz_button.dart';
@@ -20,6 +22,8 @@ class CustomizeQuizPage extends StatelessWidget {
     QuizCustomizerCubit quizCustomizer =
         BlocProvider.of<QuizCustomizerCubit>(context);
     Size size = MediaQuery.of(context).size;
+    QuestionServiceProvider questionService =
+        Provider.of<QuestionServiceProvider>(context);
 
     void changeQuestionCount(double value) {
       quizCustomizer.changeQuestionCount(value.toInt());
@@ -216,6 +220,7 @@ class CustomizeQuizPage extends StatelessWidget {
       bloc: quizCustomizer,
       listener: (context, state) {
         if (state.runtimeType == StartQuizState) {
+          questionService.reset();
           Navigator.of(context).pushNamed(
             QuizPage.routeName,
             arguments: quizCustomizer.quizParameter,

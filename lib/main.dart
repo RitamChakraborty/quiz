@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz/service/question_service_provider.dart';
 import 'package:quiz/service/quiz_customizer_cubit.dart';
 import 'package:quiz/view/customize_quiz_page.dart';
 import 'package:quiz/view/home_page.dart';
@@ -20,24 +22,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: QuizCustomizerCubit(),
-      child: MaterialApp(
-        title: "Quiz",
-        debugShowCheckedModeBanner: false,
-        initialRoute: HomePage.routeName,
-        routes: {
-          HomePage.routeName: (context) => HomePage(),
-          CustomizeQuizPage.routeName: (context) => CustomizeQuizPage(),
-          QuizPage.routeName: (context) => QuizPage(),
-          ScorePage.routeName: (context) => ScorePage(),
-        },
-        theme: ThemeData(
-          primaryColor: Colors.purple,
-          brightness: Brightness.dark,
-          accentColor: Colors.deepOrangeAccent,
-          backgroundColor: Color(0xFF263058),
-          scaffoldBackgroundColor: Color(0xFF263058),
-        ),
-      ),
+      child: ChangeNotifierProvider<QuestionServiceProvider>(
+          create: (_) => QuestionServiceProvider(),
+          builder: (context, child) {
+            return MaterialApp(
+              title: "Quiz",
+              debugShowCheckedModeBanner: false,
+              initialRoute: HomePage.routeName,
+              routes: {
+                HomePage.routeName: (context) => HomePage(),
+                CustomizeQuizPage.routeName: (context) => CustomizeQuizPage(),
+                QuizPage.routeName: (context) => QuizPage(),
+                ScorePage.routeName: (context) => ScorePage(),
+              },
+              theme: ThemeData(
+                primaryColor: Colors.purple,
+                brightness: Brightness.dark,
+                accentColor: Colors.deepOrangeAccent,
+                backgroundColor: Color(0xFF263058),
+                scaffoldBackgroundColor: Color(0xFF263058),
+              ),
+            );
+          }),
     );
   }
 }
