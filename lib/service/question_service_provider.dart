@@ -56,7 +56,6 @@ class QuestionServiceProvider extends ChangeNotifier {
   }
 
   void answer(bool value) {
-    print(value);
     if (value) {
       ++_score;
     }
