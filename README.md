@@ -39,6 +39,7 @@ A quiz app in flutter.
 - Idea was taken from a
 [video](https://www.youtube.com/watch?v=jBBl1tYkUnE)
 by [**Bram Vanbilsen**](https://www.youtube.com/user/BramVanbilsen)
+- Thanks to [shatanikmahanty](https://github.com/shatanikmahanty) for helping out in fixing an issue
 
 ### Install
 
