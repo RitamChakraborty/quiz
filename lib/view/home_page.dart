@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage>
     }
 
     final Widget sliverAppBar = SliverAppBar(
-      expandedHeight: size.height * 0.15,
+      expandedHeight: size.height * 0.12,
       backgroundColor: Colors.transparent,
       elevation: 0,
       flexibleSpace: LayoutBuilder(
