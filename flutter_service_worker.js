@@ -29,10 +29,10 @@ const RESOURCES = {
 "assets/assets/images/gadgets.webp": "71f8292cf89ae5a5a7b055da7dd5eef5",
 "assets/assets/images/vehicles.webp": "38e2cfe96ecc0a788010ad6b25040252",
 "assets/assets/images/geography.webp": "ddf66c6753f2e4f854dd0c592a6cf0f6",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
-"assets/NOTICES": "2f57442d389dd88a1734933ff2babac0",
-"main.dart.js": "35fecbcd587790482c9a1b1eb5c33a67",
+"assets/NOTICES": "892872dd4c2c89c2f1de7348b905cf0b",
+"main.dart.js": "617c77b623185380f34b250b60f5abb2",
 "version.json": "b93d48b87f3bd6fed6a5c2a294e18ab4",
 "icons/apple-icon-114x114.png": "492e6654750d250d5bb800106a24029a",
 "icons/android-icon-48x48.png": "0e7e59d673482c3d64f90caa392b4d49",
@@ -62,8 +62,8 @@ const RESOURCES = {
 "icons/favicon-96x96.png": "1171f96171a32e43fa1dc2194fd48881",
 "icons/favicon.ico": "24c208260000e57304d010314c6f30c1",
 "favicon.png": "2a1a95284527b15f2097a624860a4cf1",
-"index.html": "463c46dd489cce3a905465295650a6a0",
-"/": "463c46dd489cce3a905465295650a6a0"
+"index.html": "5c5d6373b4640560b047a2c595e7509d",
+"/": "5c5d6373b4640560b047a2c595e7509d"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -81,7 +81,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });
